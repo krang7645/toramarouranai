@@ -43,7 +43,7 @@ const ResultScreen = ({
       <Box sx={{ my: 4, textAlign: 'center' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4 }}>
           <img
-            src={process.env.PUBLIC_URL + "/toramaro-header.png"}
+            src={process.env.PUBLIC_URL + "/toramaro-mbtiresult.png"}
             alt="トラまろMBTI診断結果"
             style={{
               width: '180px',
