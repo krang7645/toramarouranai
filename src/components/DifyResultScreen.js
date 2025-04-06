@@ -24,12 +24,16 @@ const DifyResultScreen = () => {
       if (jsonMatch && jsonMatch[1]) {
         let jsonContent = '';
         try {
-          jsonContent = jsonMatch[1].trim();
-          console.log('抽出されたJSON文字列:', jsonContent);
+          // JSONテキストの前処理
+          jsonContent = jsonMatch[1].trim()
+            .replace(/[\u200B-\u200D\uFEFF]/g, '') // 不可視文字を削除
+            .replace(/\n\s*\n/g, '\n') // 空行を削除
+            .replace(/^\s+|\s+$/gm, ''); // 各行の先頭と末尾の空白を削除
+
+          console.log('クリーニング後のJSON文字列:', jsonContent);
           const parsedData = JSON.parse(jsonContent);
           console.log('パースされたJSONデータ:', parsedData);
 
-          // 新しい構造（ネストされたJSON）の場合
           if (parsedData.恋愛 && typeof parsedData.恋愛 === 'object' && parsedData.恋愛.アドバイス) {
             const flatData = {
               恋愛: parsedData.恋愛.アドバイス || '',
@@ -44,6 +48,13 @@ const DifyResultScreen = () => {
         } catch (error) {
           console.error('JSONパースエラー:', error);
           console.error('パース失敗したJSON文字列:', jsonContent);
+          // エラーの詳細をログに出力
+          console.error('エラーの詳細:', {
+            message: error.message,
+            stack: error.stack,
+            jsonLength: jsonContent.length,
+            firstChars: jsonContent.substring(0, 100)
+          });
         }
       }
 
