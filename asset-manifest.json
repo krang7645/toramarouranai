@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/toramarouranai/static/css/main.7373bb1e.css",
+    "main.js": "/toramarouranai/static/js/main.bf6cfd0b.js",
+    "index.html": "/toramarouranai/index.html",
+    "main.7373bb1e.css.map": "/toramarouranai/static/css/main.7373bb1e.css.map",
+    "main.bf6cfd0b.js.map": "/toramarouranai/static/js/main.bf6cfd0b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7373bb1e.css",
+    "static/js/main.bf6cfd0b.js"
+  ]
+}
