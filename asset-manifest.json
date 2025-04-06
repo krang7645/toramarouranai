@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/toramarouranai/static/css/main.c8f735e1.css",
-    "main.js": "/toramarouranai/static/js/main.84214a4f.js",
+    "main.js": "/toramarouranai/static/js/main.084b1a46.js",
     "index.html": "/toramarouranai/index.html",
     "main.c8f735e1.css.map": "/toramarouranai/static/css/main.c8f735e1.css.map",
-    "main.84214a4f.js.map": "/toramarouranai/static/js/main.84214a4f.js.map"
+    "main.084b1a46.js.map": "/toramarouranai/static/js/main.084b1a46.js.map"
   },
   "entrypoints": [
     "static/css/main.c8f735e1.css",
-    "static/js/main.84214a4f.js"
+    "static/js/main.084b1a46.js"
   ]
 }
