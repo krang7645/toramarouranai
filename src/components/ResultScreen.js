@@ -9,10 +9,8 @@ import {
   CircularProgress,
   Grid,
   Card,
-  CardContent,
-  Avatar
+  CardContent
 } from '@mui/material';
-import PetsIcon from '@mui/icons-material/Pets';
 
 const ResultScreen = ({
   zodiacSign,
@@ -43,12 +41,22 @@ const ResultScreen = ({
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4, textAlign: 'center' }}>
-        <Avatar sx={{ width: 80, height: 80, mx: 'auto', mb: 2, bgcolor: 'primary.main' }}>
-          <PetsIcon fontSize="large" />
-        </Avatar>
-        <Typography variant="h4" component="h1" gutterBottom>
-          トラまろ　天命診断
-        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4 }}>
+          <img
+            src={process.env.PUBLIC_URL + "/toramaro-header.png"}
+            alt="トラまろMBTI診断結果"
+            style={{
+              width: '180px',
+              height: '180px',
+              objectFit: 'contain',
+              marginBottom: '1rem',
+              display: 'block'
+            }}
+          />
+          <Typography variant="h4" component="h1" gutterBottom>
+            トラまろ　天命診断
+          </Typography>
+        </Box>
 
         <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
           <Typography variant="h5" gutterBottom>
