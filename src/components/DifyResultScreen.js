@@ -22,8 +22,10 @@ const DifyResultScreen = () => {
       // JSONブロックを探す
       const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
       if (jsonMatch && jsonMatch[1]) {
+        let jsonContent = '';
         try {
-          const jsonContent = jsonMatch[1].trim();
+          jsonContent = jsonMatch[1].trim();
+          console.log('抽出されたJSON文字列:', jsonContent);
           const parsedData = JSON.parse(jsonContent);
           console.log('パースされたJSONデータ:', parsedData);
 
@@ -35,17 +37,13 @@ const DifyResultScreen = () => {
               健康: parsedData.健康?.アドバイス || '',
               お金: parsedData.お金?.アドバイス || ''
             };
+            console.log('フォーマットされたデータ:', flatData);
             setFormattedData(flatData);
-            return;
-          }
-
-          // 古い構造（フラットなJSON）の場合
-          if (parsedData.恋愛 && typeof parsedData.恋愛 === 'string') {
-            setFormattedData(parsedData);
             return;
           }
         } catch (error) {
           console.error('JSONパースエラー:', error);
+          console.error('パース失敗したJSON文字列:', jsonContent);
         }
       }
 
@@ -57,25 +55,48 @@ const DifyResultScreen = () => {
         お金: ''
       };
 
+      // まず【カテゴリ】形式で検索
       const patterns = [
         {
-          恋愛: /【恋愛】([\s\S]*?)(?=【仕事】|【健康】|【お金】|$)/i,
-          仕事: /【仕事】([\s\S]*?)(?=【恋愛】|【健康】|【お金】|$)/i,
-          健康: /【健康】([\s\S]*?)(?=【恋愛】|【仕事】|【お金】|$)/i,
-          お金: /【お金】([\s\S]*?)(?=【恋愛】|【仕事】|【健康】|$)/i
+          恋愛: /【恋愛】\s*([\s\S]*?)(?=【仕事】|【健康】|【お金】|$)/i,
+          仕事: /【仕事】\s*([\s\S]*?)(?=【恋愛】|【健康】|【お金】|$)/i,
+          健康: /【健康】\s*([\s\S]*?)(?=【恋愛】|【仕事】|【お金】|$)/i,
+          お金: /【お金】\s*([\s\S]*?)(?=【恋愛】|【仕事】|【健康】|$)/i
+        },
+        // 「カテゴリ：」形式も試す
+        {
+          恋愛: /恋愛[：:]\s*([\s\S]*?)(?=(?:仕事|健康|お金)[：:]|$)/i,
+          仕事: /仕事[：:]\s*([\s\S]*?)(?=(?:恋愛|健康|お金)[：:]|$)/i,
+          健康: /健康[：:]\s*([\s\S]*?)(?=(?:恋愛|仕事|お金)[：:]|$)/i,
+          お金: /お金[：:]\s*([\s\S]*?)(?=(?:恋愛|仕事|健康)[：:]|$)/i
         }
       ];
 
+      let foundAny = false;
       for (const pattern of patterns) {
         for (const category of ['恋愛', '仕事', '健康', 'お金']) {
-          const match = text.match(pattern[category]);
-          if (match && match[1]) {
-            result[category] = match[1].trim();
+          if (!result[category]) { // まだ見つかっていないカテゴリのみ検索
+            const match = text.match(pattern[category]);
+            if (match && match[1]) {
+              result[category] = match[1].trim();
+              foundAny = true;
+            }
           }
         }
       }
 
-      setFormattedData(result);
+      if (foundAny) {
+        console.log('テキストから抽出されたデータ:', result);
+        setFormattedData(result);
+      } else {
+        // どのパターンでも見つからない場合は、テキスト全体を恋愛アドバイスとして扱う
+        setFormattedData({
+          恋愛: text.trim(),
+          仕事: '',
+          健康: '',
+          お金: ''
+        });
+      }
     }
   }, [difyResponse]);
 
