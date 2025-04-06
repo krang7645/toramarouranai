@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Avatar, Box, Button, Container, Grid, Link, Paper, Typography, Divider } from '@mui/material';
+import { Avatar, Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import PetsIcon from '@mui/icons-material/Pets';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import WorkIcon from '@mui/icons-material/Work';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import PaidIcon from '@mui/icons-material/Paid';
-import mbtiTypeDetails from '../utils/mbtiTypeDetails';
-import zodiacDetails from '../utils/zodiacDetails';
 
 const DifyResultScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { difyResponse, mbtiType, zodiacSign, gender } = location.state || {};
+  const { difyResponse, mbtiType, zodiacSign } = location.state || {};
   const [formattedData, setFormattedData] = useState(null);
 
   useEffect(() => {
@@ -21,6 +19,37 @@ const DifyResultScreen = () => {
       const text = difyResponse.data.outputs.text;
       console.log('Difyレスポンステキスト:', text);
 
+      // JSONブロックを探す
+      const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+      if (jsonMatch && jsonMatch[1]) {
+        try {
+          const jsonContent = jsonMatch[1].trim();
+          const parsedData = JSON.parse(jsonContent);
+          console.log('パースされたJSONデータ:', parsedData);
+
+          // 新しい構造（ネストされたJSON）の場合
+          if (parsedData.恋愛 && typeof parsedData.恋愛 === 'object' && parsedData.恋愛.アドバイス) {
+            const flatData = {
+              恋愛: parsedData.恋愛.アドバイス || '',
+              仕事: parsedData.仕事?.アドバイス || '',
+              健康: parsedData.健康?.アドバイス || '',
+              お金: parsedData.お金?.アドバイス || ''
+            };
+            setFormattedData(flatData);
+            return;
+          }
+
+          // 古い構造（フラットなJSON）の場合
+          if (parsedData.恋愛 && typeof parsedData.恋愛 === 'string') {
+            setFormattedData(parsedData);
+            return;
+          }
+        } catch (error) {
+          console.error('JSONパースエラー:', error);
+        }
+      }
+
+      // JSONパースに失敗した場合は、テキストから抽出を試みる
       const result = {
         恋愛: '',
         仕事: '',
@@ -28,7 +57,6 @@ const DifyResultScreen = () => {
         お金: ''
       };
 
-      // テキストから各カテゴリの内容を抽出
       const patterns = [
         {
           恋愛: /【恋愛】([\s\S]*?)(?=【仕事】|【健康】|【お金】|$)/i,
