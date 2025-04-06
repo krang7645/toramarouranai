@@ -11,9 +11,8 @@ import {
   RadioGroup,
   TextField,
   Typography,
-  Avatar
+  Paper
 } from '@mui/material';
-import PetsIcon from '@mui/icons-material/Pets';
 
 const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiagnosis }) => {
   // 年月日の入力ハンドラ
@@ -36,7 +35,7 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
     for (let i = currentYear - 80; i <= currentYear - 18; i++) {
       options.push(
         <option key={i} value={i}>
-          {i}年
+          {i}
         </option>
       );
     }
@@ -49,7 +48,7 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
     for (let i = 1; i <= 12; i++) {
       options.push(
         <option key={i} value={i}>
-          {i}月
+          {i}
         </option>
       );
     }
@@ -59,11 +58,10 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
   // 日の選択肢を生成
   const generateDayOptions = () => {
     const options = [];
-    // 簡略化のため常に31日まで表示
     for (let i = 1; i <= 31; i++) {
       options.push(
         <option key={i} value={i}>
-          {i}日
+          {i}
         </option>
       );
     }
@@ -71,29 +69,73 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4, textAlign: 'center' }}>
-        <Avatar sx={{ width: 80, height: 80, mx: 'auto', mb: 2, bgcolor: 'primary.main' }}>
-          <PetsIcon fontSize="large" />
-        </Avatar>
-        <Typography variant="h4" component="h1" gutterBottom>
-          トラまろ　天命診断
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>
-          あなたのMBTIと星座で未来を占います
-        </Typography>
+    <Container maxWidth="sm" sx={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: '#f5f5f5'
+    }}>
+      <Paper
+        elevation={3}
+        sx={{
+          width: '100%',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          position: 'relative',
+          background: 'linear-gradient(180deg, #2c1810 0%, #1a0f0a 100%)'
+        }}
+      >
+        {/* ヘッダー部分 */}
+        <Box sx={{
+          p: 3,
+          textAlign: 'center',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '100px',
+            background: 'linear-gradient(180deg, #2c1810 0%, rgba(44, 24, 16, 0) 100%)',
+            zIndex: 0
+          }
+        }}>
+          <Box
+            component="img"
+            src={process.env.PUBLIC_URL + "/toramaro-header.png"}
+            alt="トラまろ"
+            sx={{
+              width: '180px',
+              height: '180px',
+              marginBottom: 3,
+              position: 'relative',
+              zIndex: 1
+            }}
+          />
+          <Typography variant="h5" component="h1" gutterBottom sx={{ color: '#fff', fontWeight: 'bold', position: 'relative', zIndex: 1 }}>
+            トラまろ　天命診断
+          </Typography>
+          <Typography variant="body1" sx={{ color: '#fff', mb: 3, position: 'relative', zIndex: 1 }}>
+            あなたのMBTIと星座で未来を占います
+          </Typography>
+        </Box>
 
-        {/* 生年月日セレクト */}
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h6" component="h2" gutterBottom>
+        {/* フォーム部分 */}
+        <Box sx={{ p: 3, bgcolor: '#fff', borderRadius: '16px 16px 0 0' }}>
+          <Typography variant="body1" gutterBottom sx={{ mb: 2, textAlign: 'center' }}>
             生年月日を選択してください
           </Typography>
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} sm={3}>
+          <Grid container spacing={1} justifyContent="center" sx={{ mb: 3 }}>
+            <Grid item xs={4}>
               <TextField
                 select
                 fullWidth
-                label="年"
+                size="small"
                 value={birthdate.year}
                 onChange={(e) => handleBirthdateChange('year', e.target.value)}
                 SelectProps={{ native: true }}
@@ -101,11 +143,11 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
                 {generateYearOptions()}
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={4}>
               <TextField
                 select
                 fullWidth
-                label="月"
+                size="small"
                 value={birthdate.month}
                 onChange={(e) => handleBirthdateChange('month', e.target.value)}
                 SelectProps={{ native: true }}
@@ -113,11 +155,11 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
                 {generateMonthOptions()}
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={4}>
               <TextField
                 select
                 fullWidth
-                label="日"
+                size="small"
                 value={birthdate.day}
                 onChange={(e) => handleBirthdateChange('day', e.target.value)}
                 SelectProps={{ native: true }}
@@ -126,42 +168,46 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
               </TextField>
             </Grid>
           </Grid>
-        </Box>
 
-        {/* 性別選択 */}
-        <Box sx={{ mb: 4 }}>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">
-              <Typography variant="h6" component="h2" gutterBottom>
-                性別を選択してください
-              </Typography>
-            </FormLabel>
+          <Typography variant="body1" gutterBottom sx={{ mb: 2, textAlign: 'center' }}>
+            性別を選択してください
+          </Typography>
+          <FormControl component="fieldset" fullWidth>
             <RadioGroup
               row
               name="gender"
               value={gender}
               onChange={handleGenderChange}
-              sx={{ justifyContent: 'center', mb: 2 }}
+              sx={{ justifyContent: 'center', mb: 3 }}
             >
               <FormControlLabel value="男性" control={<Radio />} label="男性" />
               <FormControlLabel value="女性" control={<Radio />} label="女性" />
               <FormControlLabel value="その他" control={<Radio />} label="その他" />
             </RadioGroup>
           </FormControl>
-        </Box>
 
-        {/* 開始ボタン */}
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={onStartDiagnosis}
-          disabled={!gender}
-          sx={{ px: 4, py: 1 }}
-        >
-          診断スタート
-        </Button>
-      </Box>
+          <Box sx={{ textAlign: 'center' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={onStartDiagnosis}
+              disabled={!gender}
+              sx={{
+                px: 4,
+                py: 1,
+                borderRadius: '25px',
+                background: 'linear-gradient(45deg, #2c1810 30%, #1a0f0a 90%)',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #1a0f0a 30%, #2c1810 90%)',
+                }
+              }}
+            >
+              診断スタート
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
     </Container>
   );
 };

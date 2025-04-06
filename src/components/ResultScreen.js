@@ -115,7 +115,7 @@ const ResultScreen = ({
 
         <Box sx={{ mt: 4 }}>
           <Typography variant="h6" gutterBottom>
-            AIによる詳細診断
+            トラまろに取説を作ってもらう
           </Typography>
           <Typography variant="body2" color="text.secondary" paragraph>
             あなたのMBTIタイプと星座に基づいた、より詳細な洞察を得ることができます。
@@ -134,7 +134,7 @@ const ResultScreen = ({
                 分析中...
               </>
             ) : (
-              'AI診断を受ける'
+              '作成開始'
             )}
           </Button>
 
