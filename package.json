@@ -2,6 +2,7 @@
   "name": "toramarouranai",
   "version": "1.0.0",
   "private": false,
+  "homepage": ".",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "PUBLIC_URL=. GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
