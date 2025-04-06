@@ -120,78 +120,32 @@ const MBTITest = () => {
 
   // Difyへのデータ送信とレスポンス取得
   const sendToDify = async () => {
-    // 前回のレスポンスをクリアして準備状態に
     setDifyResponse(null);
     setLoading(true);
 
-    // テスト用のダミーデータ（本番環境では削除）
-    const testResponseData = {
-      "恋愛": "山羊座の真面目さとENFPの天真爛漫さ、ギャップ萌えやで！ただ、真面目すぎると相手が疲れちゃうかも。たまにはノリでデートに誘ってみ！あと、感情豊かやから、相手の気持ちもちゃんと汲み取ってあげてな。ええ恋、掴めるで！",
-      "仕事": "クリエイティブな才能と計画性、最強やん！でも、飽きっぽいとこもあるから、目標をコロコロ変えんと、一つずつ確実にクリアしていこ！チームワークも大切に。ワイはあんたの熱意、信じてるで！",
-      "健康": "エネルギッシュなのはええけど、無理は禁物！山羊座は元々体が丈夫やけど、ENFPはストレス溜めやすいから、定期的にリフレッシュせなアカンで！運動もええけど、ワイと一緒にお昼寝もええで！",
-      "お金": "頭の回転が速いから、お金儲けのチャンスも多いはず！でも、衝動買いには要注意やで！計画的に貯金も忘れずに。投資もええけど、リスク管理はしっかりな！ワイはあんたが賢くお金を使えるように祈ってるで！"
-    };
-
-    // テスト用APIモックとして使用
-    const USE_TEST_DATA = false;
-
-    if (USE_TEST_DATA) {
-      console.log('テストデータを使用します:', testResponseData);
-      // 有効性をテスト
-      const isValid = hasValidContent(testResponseData);
-      console.log('テストデータは有効か:', isValid);
-
-      if (isValid) {
-        setDifyResponse(testResponseData);
-        setLoading(false);
-        setStep(4);
-        return;
-      } else {
-        console.error('テストデータが無効です！問題が残っています');
-      }
-    }
-
-    // セッション固有のIDを生成
-    const sessionId = `${new Date().getTime()}-${Math.random().toString(36).substring(2, 9)}`;
-    console.log(`Dify API リクエスト開始 (セッションID: ${sessionId})`);
-
     try {
-      // AbortControllerの設定（タイムアウト用）
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 45000); // 45秒でタイムアウト
+      const timeoutId = setTimeout(() => controller.abort(), 45000);
 
-      // API URLを環境変数から取得するか、デフォルト値を使用
-      const apiUrl = process.env.REACT_APP_DIFY_API_URL || 'https://api.dify.ai/v1/chat-messages';
-      console.log('使用するAPI URL:', apiUrl);
+      const apiUrl = process.env.REACT_APP_DIFY_API_URL;
+      const apiKey = process.env.REACT_APP_DIFY_API_KEY;
 
-      const apiKey = process.env.REACT_APP_DIFY_API_KEY || 'app-sIkEDjFqaRrWwmbZAkIIwfZO';
-      console.log('APIキー (最初の10文字):', apiKey.substring(0, 10) + '...');
+      if (!apiUrl || !apiKey) {
+        throw new Error('Dify APIの設定が見つかりません。環境変数を確認してください。');
+      }
 
-      // リクエストボディの構築
       const requestBody = {
         inputs: {
           zodiac: zodiacSign,
           mbti: mbtiType,
           gender: gender
         },
-        query: "私のMBTIタイプと星座と性別から、恋愛、仕事、健康、お金についての今後の占いをしてください。必ず全ての項目について「【恋愛】」「【仕事】」「【健康】」「【お金】」の見出しをつけて回答してください。",
         response_mode: "blocking",
-        user: sessionId
+        conversation_id: "",
+        user: "user"
       };
 
-      // APIエンドポイントがworkflows/runの場合はリクエスト形式を調整
-      if (apiUrl.includes('/workflows/run')) {
-        requestBody.inputs = {
-          zodiac: zodiacSign,
-          mbti: mbtiType,
-          gender: gender
-        };
-        // workflows APIでは不要なフィールドを削除
-        delete requestBody.query;
-        delete requestBody.response_mode;
-      }
-
-      console.log('リクエストボディ:', JSON.stringify(requestBody));
+      console.log('Dify APIリクエスト送信中...');
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -203,30 +157,33 @@ const MBTITest = () => {
         signal: controller.signal
       });
 
-      // タイムアウトタイマーをクリア
       clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error(`Dify API エラー (${response.status}): ${errorText}`);
-        throw new Error(`API応答エラー (${response.status}): サーバーからのエラーレスポンス`);
+        console.error('Dify APIエラー:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorText
+        });
+        throw new Error(`APIエラー (${response.status}): ${response.statusText}`);
       }
 
       const data = await response.json();
-      console.log('Dify API response:', data);
-      console.log('Dify API response型:', typeof data);
-      console.log('Dify API responseキー:', Object.keys(data));
+      console.log('Dify APIレスポンス:', data);
 
-      // データを直接セット - DifyResultScreenコンポーネントで処理
-      console.log('応答データをそのまま渡します');
+      if (!data || !data.data || !data.data.outputs || !data.data.outputs.text) {
+        throw new Error('APIレスポンスの形式が不正です');
+      }
+
       setDifyResponse(data);
       setLoading(false);
       setStep(4);
+
     } catch (error) {
-      console.error('Dify API リクエストエラー:', error);
+      console.error('Dify APIエラー:', error);
       setLoading(false);
-      alert(`エラーが発生しました: ${error.message}`);
-      // 診断結果画面に戻る
+      alert(`エラーが発生しました: ${error.message}\n\n再度お試しください。`);
       setStep(3);
     }
   };
