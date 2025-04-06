@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/toramarouranai/static/css/main.7373bb1e.css",
-    "main.js": "/toramarouranai/static/js/main.bf6cfd0b.js",
-    "index.html": "/toramarouranai/index.html",
-    "main.7373bb1e.css.map": "/toramarouranai/static/css/main.7373bb1e.css.map",
-    "main.bf6cfd0b.js.map": "/toramarouranai/static/js/main.bf6cfd0b.js.map"
+    "main.css": "/static/css/main.c8f735e1.css",
+    "main.js": "/static/js/main.46d56fef.js",
+    "index.html": "/index.html",
+    "main.c8f735e1.css.map": "/static/css/main.c8f735e1.css.map",
+    "main.46d56fef.js.map": "/static/js/main.46d56fef.js.map"
   },
   "entrypoints": [
-    "static/css/main.7373bb1e.css",
-    "static/js/main.bf6cfd0b.js"
+    "static/css/main.c8f735e1.css",
+    "static/js/main.46d56fef.js"
   ]
 }
