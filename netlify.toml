@@ -1,5 +1,5 @@
 [build]
-  command = "CI=false GENERATE_SOURCEMAP=false npm run build"
+  command = "npm run build"
   publish = "build"
 
 [[redirects]]
@@ -11,4 +11,4 @@
 [[headers]]
   for = "/*"
     [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "no-cache, no-store, must-revalidate"
