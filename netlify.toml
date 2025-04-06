@@ -7,3 +7,9 @@
   to = "/index.html"
   status = 200
   force = true
+
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Cache-Control = "no-cache"
+    Pragma = "no-cache"
