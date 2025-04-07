@@ -32,7 +32,7 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
   const generateYearOptions = () => {
     const currentYear = new Date().getFullYear();
     const options = [];
-    for (let i = currentYear - 80; i <= currentYear - 18; i++) {
+    for (let i = currentYear - 80; i <= 2025; i++) {
       options.push(
         <option key={i} value={i}>
           {i}
