@@ -129,6 +129,7 @@ const DifyResultScreen = () => {
           'Authorization': `Bearer ${process.env.REACT_APP_DIFY_API_KEY}`
         },
         body: JSON.stringify({
+          workflow_id: process.env.REACT_APP_DIFY_WORKFLOW_ID,
           inputs: {
             mbti_type: mbtiType,
             zodiac_sign: zodiacSign,
