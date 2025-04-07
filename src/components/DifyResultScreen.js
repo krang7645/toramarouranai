@@ -54,20 +54,43 @@ const DifyResultScreen = () => {
 
     try {
       console.log('Difyレスポンス:', difyResponse);
-      const jsonMatch = difyResponse.answer.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+      // レスポンスの構造を確認
+      if (!difyResponse.answer && difyResponse.data?.answer) {
+        const text = difyResponse.data.answer;
+        console.log('Difyレスポンステキスト:', text);
+        const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
 
-      if (!jsonMatch) {
-        console.error('JSONブロックが見つかりません');
+        if (!jsonMatch) {
+          console.error('JSONブロックが見つかりません');
+          return;
+        }
+
+        const jsonStr = jsonMatch[1].trim();
+        console.log('抽出されたJSON文字列:', jsonStr);
+
+        const parsedData = JSON.parse(jsonStr);
+        console.log('パース済みデータ:', parsedData);
+
+        setFormattedData(parsedData);
+      } else if (difyResponse.answer) {
+        const jsonMatch = difyResponse.answer.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+
+        if (!jsonMatch) {
+          console.error('JSONブロックが見つかりません');
+          return;
+        }
+
+        const jsonStr = jsonMatch[1].trim();
+        console.log('抽出されたJSON文字列:', jsonStr);
+
+        const parsedData = JSON.parse(jsonStr);
+        console.log('パース済みデータ:', parsedData);
+
+        setFormattedData(parsedData);
+      } else {
+        console.error('不正なレスポンス形式です:', difyResponse);
         return;
       }
-
-      const jsonStr = jsonMatch[1].trim();
-      console.log('抽出されたJSON文字列:', jsonStr);
-
-      const parsedData = JSON.parse(jsonStr);
-      console.log('パース済みデータ:', parsedData);
-
-      setFormattedData(parsedData);
     } catch (error) {
       console.error('JSONパースエラー:', error);
       setFormattedData(null);
@@ -89,7 +112,8 @@ const DifyResultScreen = () => {
           'Authorization': 'Bearer ' + process.env.REACT_APP_DIFY_API_KEY
         },
         body: JSON.stringify({
-          query: `以下の条件で取説を作成してください：
+          inputs: {
+            query: `以下の条件で取説を作成してください：
 MBTI: ${mbtiType}
 星座: ${zodiacSign}
 生年月日: ${birthday}
@@ -121,7 +145,8 @@ MBTI: ${mbtiType}
     "恋人": "",
     "仕事": ""
   }
-}`,
+}`
+          },
           response_mode: "blocking",
           conversation_id: "",
           user: "user"
