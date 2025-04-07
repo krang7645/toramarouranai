@@ -11,11 +11,22 @@ import PaidIcon from '@mui/icons-material/Paid';
 const DifyResultScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  console.log('location全体:', location);
+  console.log('location.state:', location.state);
+
   const { difyResponse, mbtiType, zodiacSign, birthday } = location.state || {};
+  console.log('取得した値:', { difyResponse, mbtiType, zodiacSign, birthday });
+
   const [formattedData, setFormattedData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!mbtiType || !zodiacSign || !birthday) {
+      console.error('必要なデータが不足しています:', { mbtiType, zodiacSign, birthday });
+      navigate('/mbti-test');
+      return;
+    }
+
     if (!difyResponse) {
       generateDescription();
     } else if (difyResponse.data && difyResponse.data.outputs && difyResponse.data.outputs.text) {
@@ -126,9 +137,9 @@ const DifyResultScreen = () => {
         workflow_id: process.env.REACT_APP_DIFY_WORKFLOW_ID,
         user: 'default',
         inputs: {
-          mbti: mbtiType,
-          zodiac: zodiacSign,
-          birthday: birthday,
+          mbti: mbtiType || '',
+          zodiac: zodiacSign || '',
+          birthday: birthday || '',
           gender: 'not_specified'
         }
       };
