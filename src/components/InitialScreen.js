@@ -182,7 +182,7 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
             >
               <FormControlLabel value="男性" control={<Radio />} label="男性" />
               <FormControlLabel value="女性" control={<Radio />} label="女性" />
-              <FormControlLabel value="その他" control={<Radio />} label="その他" />
+              <FormControlLabel value="ナイショ" control={<Radio />} label="ナイショ" />
             </RadioGroup>
           </FormControl>
 
