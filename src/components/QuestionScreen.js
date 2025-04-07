@@ -19,13 +19,13 @@ const QuestionScreen = ({
   onAnswer
 }) => {
   const answerOptions = [
-    { value: -3, label: "めっちゃ違うわ" },
-    { value: -2, label: "違うかな" },
-    { value: -1, label: "どっちかと言うと違うわ" },
-    { value: 0, label: "どっちもちゃうなぁ" },
-    { value: 1, label: "どっちかと言うとそうやわ" },
+    { value: 3, label: "めっちゃそうやわ" },
     { value: 2, label: "そうやな" },
-    { value: 3, label: "めっちゃそうやわ" }
+    { value: 1, label: "どっちかと言うとそうやわ" },
+    { value: 0, label: "どっちもちゃうなぁ" },
+    { value: -1, label: "どっちかと言うと違うわ" },
+    { value: -2, label: "違うかな" },
+    { value: -3, label: "めっちゃ違うわ" }
   ];
 
   const progress = ((currentQuestion + 1) / totalQuestions) * 100;
