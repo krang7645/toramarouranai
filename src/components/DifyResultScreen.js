@@ -47,52 +47,32 @@ const DifyResultScreen = () => {
   const [difyResponse, setDifyResponse] = useState(initialDifyResponse);
 
   useEffect(() => {
-    if (!mbtiType || !zodiacSign || !birthday) {
-      console.error('必要なデータが不足しています:', { mbtiType, zodiacSign, birthday });
-      navigate('/mbti-test');
+    if (!difyResponse) {
+      console.error('Difyレスポンスがありません');
       return;
     }
 
-    // レスポンスがある場合のみJSONをパース
-    if (difyResponse?.data?.answer) {
-      const text = difyResponse.data.answer;
-      console.log('Difyレスポンステキスト:', text);
+    try {
+      console.log('Difyレスポンス:', difyResponse);
+      const jsonMatch = difyResponse.answer.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
 
-      try {
-        // マークダウンのコードブロックからJSONを抽出
-        const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
-        if (!jsonMatch) {
-          console.error('JSONブロックが見つかりません:', text);
-          setFormattedData(defaultData);
-          return;
-        }
-
-        const jsonText = jsonMatch[1].trim();
-        console.log('抽出したJSON:', jsonText);
-
-        // 不要な文字を削除
-        const cleanedJson = jsonText
-          .replace(/[\u200B-\u200D\uFEFF]/g, '') // 不可視文字を削除
-          .replace(/\n\s*\n/g, '\n')             // 空行を削除
-          .replace(/^\s+|\s+$/gm, '');           // 行頭と行末の空白を削除
-
-        console.log('クリーニング後のJSON:', cleanedJson);
-        const parsedData = JSON.parse(cleanedJson);
-        console.log('パースされたJSONデータ:', parsedData);
-
-        if (parsedData && typeof parsedData === 'object') {
-          setFormattedData(parsedData);
-        } else {
-          console.error('不正なJSONデータ形式です:', parsedData);
-          setFormattedData(defaultData);
-        }
-      } catch (error) {
-        console.error('JSONパースエラー:', error);
-        console.error('パース失敗したテキスト:', text);
-        setFormattedData(defaultData);
+      if (!jsonMatch) {
+        console.error('JSONブロックが見つかりません');
+        return;
       }
+
+      const jsonStr = jsonMatch[1].trim();
+      console.log('抽出されたJSON文字列:', jsonStr);
+
+      const parsedData = JSON.parse(jsonStr);
+      console.log('パース済みデータ:', parsedData);
+
+      setFormattedData(parsedData);
+    } catch (error) {
+      console.error('JSONパースエラー:', error);
+      setFormattedData(null);
     }
-  }, [difyResponse, mbtiType, zodiacSign, birthday, navigate]);
+  }, [difyResponse]);
 
   const handleBack = () => {
     navigate(-1);
@@ -163,22 +143,22 @@ MBTI: ${mbtiType}
     }
   };
 
-  if (!difyResponse || !formattedData) {
+  if (!formattedData) {
     return (
-      <Container maxWidth="md" sx={{ py: 4 }}>
-        <Typography variant="h5" align="center">
-          データの読み込みに失敗しました。
-        </Typography>
-        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={handleBack}
-            startIcon={<ArrowBackIcon />}
-          >
-            戻る
-          </Button>
-        </Box>
-      </Container>
+      <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+        <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+          <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+            <div className="max-w-md mx-auto">
+              <div className="divide-y divide-gray-200">
+                <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                  <p className="text-center">情報の取得中にエラーが発生しました。</p>
+                  <p className="text-center">もう一度試してください。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
