@@ -1,61 +1,76 @@
 import React from 'react';
-import { Box, Button, Container, LinearProgress, Typography, Card, CardContent, Grid } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Typography,
+  Paper,
+  LinearProgress,
+  Grid,
+  Radio,
+  RadioGroup,
+  FormControlLabel
+} from '@mui/material';
 
-const QuestionScreen = ({ currentQuestion, totalQuestions, question, onAnswer }) => {
-  // 回答オプション
+const QuestionScreen = ({
+  currentQuestion,
+  totalQuestions,
+  question,
+  onAnswer
+}) => {
   const answerOptions = [
-    { value: 2, label: 'めっちゃそうやわ！' },
-    { value: 1, label: 'まぁそうかもな' },
-    { value: 0, label: 'うーん、どっちやろ？' },
-    { value: -1, label: 'あんまりちゃうかも' },
-    { value: -2, label: 'ぜんぜんちゃうわ！' }
+    { value: -3, label: "めっちゃ違うわ" },
+    { value: -2, label: "違うかな" },
+    { value: -1, label: "どっちかと言うと違うわ" },
+    { value: 0, label: "どっちもちゃうなぁ" },
+    { value: 1, label: "どっちかと言うとそうやわ" },
+    { value: 2, label: "そうやな" },
+    { value: 3, label: "めっちゃそうやわ" }
   ];
+
+  const progress = ((currentQuestion + 1) / totalQuestions) * 100;
 
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
-        <Typography variant="h5" component="h1" gutterBottom align="center">
-          質問 {currentQuestion + 1}/{totalQuestions}
-        </Typography>
-
-        <LinearProgress
-          variant="determinate"
-          value={(currentQuestion / totalQuestions) * 100}
-          sx={{ mb: 3, height: 10, borderRadius: 5 }}
-        />
-
-        <Card variant="outlined" sx={{ mb: 4 }}>
-          <CardContent>
-            <Typography variant="h6" component="h2" gutterBottom align="center">
-              {question.text}
+        <Paper elevation={3} sx={{ p: 3 }}>
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="body2" color="text.secondary" align="center">
+              質問 {currentQuestion + 1} / {totalQuestions}
             </Typography>
-          </CardContent>
-        </Card>
+            <LinearProgress variant="determinate" value={progress} sx={{ mt: 1 }} />
+          </Box>
 
-        <Grid container direction="column" spacing={2}>
-          {answerOptions.map((option) => (
-            <Grid item key={option.value}>
-              <Button
-                fullWidth
-                variant="outlined"
-                color="primary"
-                onClick={() => onAnswer(option.value)}
+          <Typography variant="h6" align="center" gutterBottom sx={{ mb: 4 }}>
+            {question.text}
+          </Typography>
+
+          <RadioGroup
+            aria-label="question"
+            name="question"
+            onChange={(e) => onAnswer(parseInt(e.target.value))}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
+          >
+            {answerOptions.map((option) => (
+              <FormControlLabel
+                key={option.value}
+                value={option.value}
+                control={<Radio />}
+                label={option.label}
                 sx={{
-                  py: 1.5,
-                  justifyContent: 'flex-start',
-                  textAlign: 'left',
-                  borderRadius: 2,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  borderRadius: 1,
+                  p: 1,
+                  m: 0,
                   '&:hover': {
-                    backgroundColor: 'primary.light',
-                    color: 'white'
+                    bgcolor: 'action.hover',
                   }
                 }}
-              >
-                {option.label}
-              </Button>
-            </Grid>
-          ))}
-        </Grid>
+              />
+            ))}
+          </RadioGroup>
+        </Paper>
       </Box>
     </Container>
   );

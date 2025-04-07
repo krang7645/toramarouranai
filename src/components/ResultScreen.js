@@ -23,13 +23,16 @@ const ResultScreen = ({
 }) => {
   // MBTIのディメンションを計算
   const calculateDimension = (dim1, dim2) => {
-    const total = scores[dim1] + scores[dim2];
-    if (total === 0) return { dominant: dim1, percentage: 50 };
+    const maxPossibleScore = 9 * 3; // 各次元3問ずつ、最大スコアは3
+    const normalizedScore1 = ((scores[dim1] + maxPossibleScore) / (maxPossibleScore * 2)) * 100;
+    const normalizedScore2 = ((scores[dim2] + maxPossibleScore) / (maxPossibleScore * 2)) * 100;
 
-    const percentage = Math.round((scores[dim1] / total) * 100);
+    const total = normalizedScore1 + normalizedScore2;
+    const percentage = (normalizedScore1 / total) * 100;
+
     return {
-      dominant: scores[dim1] >= scores[dim2] ? dim1 : dim2,
-      percentage: percentage
+      dominant: percentage >= 50 ? dim1 : dim2,
+      percentage: percentage >= 50 ? percentage : 100 - percentage
     };
   };
 

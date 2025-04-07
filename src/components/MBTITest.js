@@ -30,56 +30,97 @@ const MBTITest = () => {
 
   // MBTI診断の質問
   const questions = [
+    // E/I 軸の質問
     {
-      text: "休みの日は家でゴロゴロするより、外で友達と遊ぶ方が好きやねん",
+      text: "友達から「今から飲み会あるねんけど、来る？」って急に誘われた時、すぐに「行く！」って答えられる方やねん",
       dimension: "EI",
       direction: "E"
     },
     {
-      text: "目の前のことより、アイデアとか可能性について考えるんが好きやねん",
-      dimension: "SN",
-      direction: "N"
-    },
-    {
-      text: "決める時は、理屈より人の気持ちを大事にしてまうわ",
-      dimension: "TF",
-      direction: "F"
-    },
-    {
-      text: "計画立てるより、なりゆきに任せる方が気楽やわ",
-      dimension: "JP",
-      direction: "P"
-    },
-    {
-      text: "初めて会う人と話すんは苦手やわ～",
+      text: "初めて行くお店でも、店員さんに気軽に話しかけられる方やわ",
       dimension: "EI",
-      direction: "I"
+      direction: "E"
     },
     {
-      text: "細かいことより、全体の雰囲気を大事にしてまうねん",
+      text: "休みの日は、家でゆっくりするより友達と出かける方が元気出るわ",
+      dimension: "EI",
+      direction: "E"
+    },
+    // S/N 軸の質問
+    {
+      text: "新しいプロジェクト始める時、細かい計画より、まずはアイデアを出すのが好きやねん",
       dimension: "SN",
       direction: "N"
     },
     {
-      text: "みんなで決める時は、公平さより和を保つ方を重視してまうわ",
+      text: "本読む時、物語の細かい描写より、その背景にある意味を考える方が好きやわ",
+      dimension: "SN",
+      direction: "N"
+    },
+    {
+      text: "料理する時、レシピ通りより、自分なりにアレンジする方が楽しいねん",
+      dimension: "SN",
+      direction: "N"
+    },
+    // T/F 軸の質問
+    {
+      text: "友達が悩み相談してきた時、解決策を提案するより、まず気持ちに寄り添う方やねん",
       dimension: "TF",
       direction: "F"
     },
     {
-      text: "予定が変わったらソワソワしてまうねん",
+      text: "グループで意見が分かれた時、論理的な判断より、みんなの気持ちを大事にする方やわ",
+      dimension: "TF",
+      direction: "F"
+    },
+    {
+      text: "仕事で失敗した人を評価する時、努力のプロセスより結果を重視してまうわ",
+      dimension: "TF",
+      direction: "T"
+    },
+    // J/P 軸の質問
+    {
+      text: "旅行行く時、スケジュールはびっしり決めてから行く方が安心やねん",
       dimension: "JP",
       direction: "J"
     },
     {
-      text: "新しい環境でもすぐに馴染めるタイプやで",
-      dimension: "EI",
-      direction: "E"
+      text: "締め切り近い仕事でも、新しいアイデアが出てきたら試してみたくなるわ",
+      dimension: "JP",
+      direction: "P"
     },
     {
-      text: "問題解決には、いつもの方法より新しいやり方を試してみたいねん",
+      text: "予定変更されると、ソワソワしてまうタイプやねん",
+      dimension: "JP",
+      direction: "J"
+    },
+    // 追加の質問
+    {
+      text: "会議の時、みんなの意見を聞いてからじゃないと、自分の考え言えへんわ",
+      dimension: "EI",
+      direction: "I"
+    },
+    {
+      text: "何か決める時、経験や事実より、直感を信じる方やねん",
       dimension: "SN",
       direction: "N"
+    },
+    {
+      text: "友達と待ち合わせる時、時間ピッタリに着くように計算してまうわ",
+      dimension: "JP",
+      direction: "J"
     }
+  ];
+
+  // 7段階評価の選択肢
+  const answerOptions = [
+    { value: -3, label: "めっちゃ違うわ" },
+    { value: -2, label: "違うかな" },
+    { value: -1, label: "どっちかと言うと違うわ" },
+    { value: 0, label: "どっちもちゃうなぁ" },
+    { value: 1, label: "どっちかと言うとそうやわ" },
+    { value: 2, label: "そうやな" },
+    { value: 3, label: "めっちゃそうやわ" }
   ];
 
   // 診断スタートボタンのハンドラ
