@@ -17,7 +17,12 @@ const DifyResultScreen = () => {
   const { difyResponse, mbtiType, zodiacSign, birthday } = location.state || {};
   console.log('取得した値:', { difyResponse, mbtiType, zodiacSign, birthday });
 
-  const [formattedData, setFormattedData] = useState(null);
+  const [formattedData, setFormattedData] = useState({
+    恋愛: { 特性: '', 天命: '', アドバイス: '' },
+    仕事: { 特性: '', 天命: '', アドバイス: '' },
+    健康: { 特性: '', 天命: '', アドバイス: '' },
+    お金: { 特性: '', 天命: '', アドバイス: '' }
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -66,14 +71,14 @@ const DifyResultScreen = () => {
       }
 
       // JSONパースに失敗した場合は、テキストから抽出を試みる
-      const result = {
-        恋愛: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
-        仕事: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
-        健康: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
-        お金: { あなたの特性: '', あなたの天命: '', アドバイス: '' }
+      const defaultData = {
+        恋愛: { 特性: '', 天命: '', アドバイス: '' },
+        仕事: { 特性: '', 天命: '', アドバイス: '' },
+        健康: { 特性: '', 天命: '', アドバイス: '' },
+        お金: { 特性: '', 天命: '', アドバイス: '' }
       };
 
-      setFormattedData(result);
+      setFormattedData(defaultData);
     }
   }, [difyResponse]);
 
@@ -137,10 +142,10 @@ const DifyResultScreen = () => {
 
         // JSONパースに失敗した場合は、デフォルト値を設定
         setFormattedData({
-          恋愛: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
-          仕事: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
-          健康: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
-          お金: { あなたの特性: '', あなたの天命: '', アドバイス: '' }
+          恋愛: { 特性: '', 天命: '', アドバイス: '' },
+          仕事: { 特性: '', 天命: '', アドバイス: '' },
+          健康: { 特性: '', 天命: '', アドバイス: '' },
+          お金: { 特性: '', 天命: '', アドバイス: '' }
         });
       }
     } catch (error) {
@@ -210,13 +215,13 @@ const DifyResultScreen = () => {
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・特性
                   </Typography>
-                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.恋愛?.['あなたの特性'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.恋愛?.特性 || '情報がありません'}</Typography>
                 </Box>
                 <Box sx={{ mb: 3 }}>
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・天命
                   </Typography>
-                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.恋愛?.['あなたの天命'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.恋愛?.天命 || '情報がありません'}</Typography>
                 </Box>
                 <Box>
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -248,13 +253,13 @@ const DifyResultScreen = () => {
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・特性
                   </Typography>
-                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.仕事?.['あなたの特性'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.仕事?.特性 || '情報がありません'}</Typography>
                 </Box>
                 <Box sx={{ mb: 3 }}>
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・天命
                   </Typography>
-                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.仕事?.['あなたの天命'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.仕事?.天命 || '情報がありません'}</Typography>
                 </Box>
                 <Box>
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -286,13 +291,13 @@ const DifyResultScreen = () => {
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・特性
                   </Typography>
-                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.健康?.['あなたの特性'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.健康?.特性 || '情報がありません'}</Typography>
                 </Box>
                 <Box sx={{ mb: 3 }}>
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・天命
                   </Typography>
-                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.健康?.['あなたの天命'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.健康?.天命 || '情報がありません'}</Typography>
                 </Box>
                 <Box>
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -324,13 +329,13 @@ const DifyResultScreen = () => {
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・特性
                   </Typography>
-                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.お金?.['あなたの特性'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.お金?.特性 || '情報がありません'}</Typography>
                 </Box>
                 <Box sx={{ mb: 3 }}>
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・天命
                   </Typography>
-                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.お金?.['あなたの天命'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.お金?.天命 || '情報がありません'}</Typography>
                 </Box>
                 <Box>
                   <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
