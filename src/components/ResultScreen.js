@@ -95,41 +95,35 @@ const ResultScreen = ({
                 <Grid item xs={12} key={index}>
                   <Card variant="outlined">
                     <CardContent>
-                      <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid item xs={5} sx={{ textAlign: 'center' }}>
+                      <Grid container alignItems="center" spacing={2}>
+                        <Grid item xs={2} sx={{ textAlign: 'center' }}>
                           <Typography variant="body2" color="text.primary">
                             {labels[index].left}
-                            <Box component="span" sx={{ display: 'block', fontWeight: 'bold', mt: 1 }}>
-                              {leftScore}点
-                            </Box>
                           </Typography>
                         </Grid>
-                        <Grid item xs={2} sx={{ textAlign: 'center' }}>
-                          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <Grid item xs={8}>
+                          <Box sx={{
+                            width: '100%',
+                            height: 8,
+                            bgcolor: 'grey.200',
+                            borderRadius: 4,
+                            position: 'relative'
+                          }}>
                             <Box sx={{
-                              width: 20,
-                              height: 20,
+                              position: 'absolute',
+                              left: `${dim.percentage}%`,
+                              top: '-4px',
+                              width: 16,
+                              height: 16,
                               borderRadius: '50%',
-                              bgcolor: dim.percentage >= 50 ? 'primary.main' : 'transparent',
-                              border: '2px solid',
-                              borderColor: 'primary.main'
-                            }} />
-                            <Box sx={{
-                              width: 20,
-                              height: 20,
-                              borderRadius: '50%',
-                              bgcolor: dim.percentage < 50 ? 'secondary.main' : 'transparent',
-                              border: '2px solid',
-                              borderColor: 'secondary.main'
+                              bgcolor: 'primary.main',
+                              transform: 'translateX(-50%)'
                             }} />
                           </Box>
                         </Grid>
-                        <Grid item xs={5} sx={{ textAlign: 'center' }}>
+                        <Grid item xs={2} sx={{ textAlign: 'center' }}>
                           <Typography variant="body2" color="text.primary">
                             {labels[index].right}
-                            <Box component="span" sx={{ display: 'block', fontWeight: 'bold', mt: 1 }}>
-                              {rightScore}点
-                            </Box>
                           </Typography>
                         </Grid>
                       </Grid>
