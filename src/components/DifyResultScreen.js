@@ -271,19 +271,9 @@ const DifyResultScreen = () => {
         open={isLoading}
       >
         <CircularProgress color="inherit" size={60} />
-        <Typography variant="h6" color="inherit">
-          トラまろが取説を作成中...
+        <Typography variant="h5" color="inherit" sx={{ fontWeight: 'bold' }}>
+          取説作成中や！
         </Typography>
-        <Box
-          component="img"
-          src="/toramaro_thinking.png"
-          alt="考え中のトラまろ"
-          sx={{
-            width: 120,
-            height: 120,
-            objectFit: 'contain'
-          }}
-        />
       </Backdrop>
 
       <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: '#fafafa' }}>
