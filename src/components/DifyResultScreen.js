@@ -54,43 +54,29 @@ const DifyResultScreen = () => {
 
     try {
       console.log('Difyレスポンス:', difyResponse);
+
       // レスポンスの構造を確認
-      if (!difyResponse.answer && difyResponse.data?.answer) {
-        const text = difyResponse.data.answer;
-        console.log('Difyレスポンステキスト:', text);
-        const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
-
-        if (!jsonMatch) {
-          console.error('JSONブロックが見つかりません');
-          return;
-        }
-
-        const jsonStr = jsonMatch[1].trim();
-        console.log('抽出されたJSON文字列:', jsonStr);
-
-        const parsedData = JSON.parse(jsonStr);
-        console.log('パース済みデータ:', parsedData);
-
-        setFormattedData(parsedData);
-      } else if (difyResponse.answer) {
-        const jsonMatch = difyResponse.answer.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
-
-        if (!jsonMatch) {
-          console.error('JSONブロックが見つかりません');
-          return;
-        }
-
-        const jsonStr = jsonMatch[1].trim();
-        console.log('抽出されたJSON文字列:', jsonStr);
-
-        const parsedData = JSON.parse(jsonStr);
-        console.log('パース済みデータ:', parsedData);
-
-        setFormattedData(parsedData);
-      } else {
-        console.error('不正なレスポンス形式です:', difyResponse);
+      const responseText = difyResponse.data?.outputs?.text;
+      if (!responseText) {
+        console.error('レスポンステキストが見つかりません:', difyResponse);
         return;
       }
+
+      console.log('レスポンステキスト:', responseText);
+      const jsonMatch = responseText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+
+      if (!jsonMatch) {
+        console.error('JSONブロックが見つかりません');
+        return;
+      }
+
+      const jsonStr = jsonMatch[1].trim();
+      console.log('抽出されたJSON文字列:', jsonStr);
+
+      const parsedData = JSON.parse(jsonStr);
+      console.log('パース済みデータ:', parsedData);
+
+      setFormattedData(parsedData);
     } catch (error) {
       console.error('JSONパースエラー:', error);
       setFormattedData(null);
@@ -105,7 +91,7 @@ const DifyResultScreen = () => {
     setIsLoading(true);
     try {
       console.log('リクエストデータ:', { mbtiType, zodiacSign, birthday });
-      const response = await fetch('https://api.dify.ai/v1/chat-messages', {
+      const response = await fetch('https://api.dify.ai/v1/workflows/run', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
