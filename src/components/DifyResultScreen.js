@@ -116,11 +116,31 @@ const DifyResultScreen = () => {
       console.log('APIレスポンスデータ:', data);
 
       if (data && data.answer) {
+        try {
+          // JSONブロックを探す
+          const jsonMatch = data.answer.match(/```json\s*([\s\S]*?)\s*```/);
+          if (jsonMatch && jsonMatch[1]) {
+            const jsonContent = jsonMatch[1].trim()
+              .replace(/[\u200B-\u200D\uFEFF]/g, '') // 不可視文字を削除
+              .replace(/\n\s*\n/g, '\n') // 空行を削除
+              .replace(/^\s+|\s+$/gm, ''); // 各行の先頭と末尾の空白を削除
+
+            const parsedData = JSON.parse(jsonContent);
+            if (parsedData.恋愛 && typeof parsedData.恋愛 === 'object') {
+              setFormattedData(parsedData);
+              return;
+            }
+          }
+        } catch (error) {
+          console.error('JSON解析エラー:', error);
+        }
+
+        // JSONパースに失敗した場合は、デフォルト値を設定
         setFormattedData({
-          恋愛: data.answer,
-          仕事: '',
-          健康: '',
-          お金: ''
+          恋愛: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
+          仕事: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
+          健康: { あなたの特性: '', あなたの天命: '', アドバイス: '' },
+          お金: { あなたの特性: '', あなたの天命: '', アドバイス: '' }
         });
       }
     } catch (error) {
