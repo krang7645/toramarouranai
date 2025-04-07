@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Button,
@@ -6,10 +6,7 @@ import {
   Typography,
   Paper,
   LinearProgress,
-  Grid,
-  Radio,
-  RadioGroup,
-  FormControlLabel
+  Grid
 } from '@mui/material';
 
 const QuestionScreen = ({
@@ -18,8 +15,6 @@ const QuestionScreen = ({
   question,
   onAnswer
 }) => {
-  const [selectedValue, setSelectedValue] = useState('');
-
   const answerOptions = [
     { value: 3, label: "めっちゃそうやわ" },
     { value: 2, label: "そうやな" },
@@ -31,12 +26,6 @@ const QuestionScreen = ({
   ];
 
   const progress = ((currentQuestion + 1) / totalQuestions) * 100;
-
-  const handleChange = (event) => {
-    const value = parseInt(event.target.value);
-    setSelectedValue(value.toString());
-    onAnswer(value);
-  };
 
   return (
     <Container maxWidth="sm">
@@ -53,32 +42,29 @@ const QuestionScreen = ({
             {question.text}
           </Typography>
 
-          <RadioGroup
-            aria-label="question"
-            name={`question-${currentQuestion}`}
-            value={selectedValue}
-            onChange={handleChange}
-            sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
-          >
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             {answerOptions.map((option) => (
-              <FormControlLabel
+              <Button
                 key={option.value}
-                value={option.value.toString()}
-                control={<Radio />}
-                label={option.label}
+                onClick={() => onAnswer(option.value)}
+                variant="outlined"
+                fullWidth
                 sx={{
-                  border: '1px solid',
+                  justifyContent: 'flex-start',
+                  textAlign: 'left',
+                  p: 2,
                   borderColor: 'divider',
-                  borderRadius: 1,
-                  p: 1,
-                  m: 0,
+                  color: 'text.primary',
                   '&:hover': {
                     bgcolor: 'action.hover',
+                    borderColor: 'primary.main'
                   }
                 }}
-              />
+              >
+                {option.label}
+              </Button>
             ))}
-          </RadioGroup>
+          </Box>
         </Paper>
       </Box>
     </Container>
