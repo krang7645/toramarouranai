@@ -128,7 +128,7 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
         {/* フォーム部分 */}
         <Box sx={{ p: 3, bgcolor: '#fff', borderRadius: '16px 16px 0 0' }}>
           <Typography variant="body1" gutterBottom sx={{ mb: 2, textAlign: 'center' }}>
-            生年月日を選択してください
+            生年月日はいつや？
           </Typography>
           <Grid container spacing={1} justifyContent="center" sx={{ mb: 3 }}>
             <Grid item xs={4}>
@@ -170,7 +170,7 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
           </Grid>
 
           <Typography variant="body1" gutterBottom sx={{ mb: 2, textAlign: 'center' }}>
-            性別を選択してください
+            性別教えてや！
           </Typography>
           <FormControl component="fieldset" fullWidth>
             <RadioGroup
