@@ -117,11 +117,8 @@ const InitialScreen = ({ birthdate, setBirthdate, gender, setGender, onStartDiag
               zIndex: 1
             }}
           />
-          <Typography variant="h5" component="h1" gutterBottom sx={{ color: '#fff', fontWeight: 'bold', position: 'relative', zIndex: 1 }}>
-            トラまろ　天命診断
-          </Typography>
           <Typography variant="body1" sx={{ color: '#fff', mb: 3, position: 'relative', zIndex: 1 }}>
-            あなたのMBTIと星座で未来を占います
+            あなたのMBTIと星座から取扱説明書を作るで！
           </Typography>
         </Box>
 
