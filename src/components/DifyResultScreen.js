@@ -129,7 +129,7 @@ const DifyResultScreen = () => {
           inputs: {
             mbti_type: mbtiType,
             zodiac_sign: zodiacSign,
-            birthday: birthday ? `${birthday.year}-${String(birthday.month).padStart(2, '0')}-${String(birthday.day).padStart(2, '0')}` : null
+            birthday: birthday
           },
           query: `${mbtiType}型で${zodiacSign}の人の特徴を教えて`,
           response_mode: "blocking",
@@ -140,6 +140,7 @@ const DifyResultScreen = () => {
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.error('APIレスポンス:', errorText);
         throw new Error(`APIエラー (${response.status}): ${errorText}`);
       }
 
