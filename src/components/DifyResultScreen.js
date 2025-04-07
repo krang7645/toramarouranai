@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Avatar, Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, Grid, Paper, Typography, Backdrop, CircularProgress } from '@mui/material';
 import PetsIcon from '@mui/icons-material/Pets';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -253,6 +253,34 @@ const DifyResultScreen = () => {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
+      {/* ローディング表示 */}
+      <Backdrop
+        sx={{
+          color: '#fff',
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2
+        }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" size={60} />
+        <Typography variant="h6" color="inherit">
+          トラまろが取説を作成中...
+        </Typography>
+        <Box
+          component="img"
+          src="/toramaro_thinking.png"
+          alt="考え中のトラまろ"
+          sx={{
+            width: 120,
+            height: 120,
+            objectFit: 'contain'
+          }}
+        />
+      </Backdrop>
+
       <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: '#fafafa' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 4, borderBottom: '2px solid #e0e0e0', pb: 2 }}>
           <Box
