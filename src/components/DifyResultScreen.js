@@ -129,7 +129,7 @@ const DifyResultScreen = () => {
           inputs: {
             mbti_type: mbtiType,
             zodiac_sign: zodiacSign,
-            birthday: birthday
+            birthday: birthday ? `${birthday.year}-${String(birthday.month).padStart(2, '0')}-${String(birthday.day).padStart(2, '0')}` : null
           },
           query: `${mbtiType}型で${zodiacSign}の人の特徴を教えて`,
           response_mode: "blocking",
@@ -138,9 +138,23 @@ const DifyResultScreen = () => {
         })
       });
 
-      // ... existing code ...
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`APIエラー (${response.status}): ${errorText}`);
+      }
+
+      const data = await response.json();
+      if (data && data.answer) {
+        setFormattedData({
+          恋愛: data.answer,
+          仕事: '',
+          健康: '',
+          お金: ''
+        });
+      }
     } catch (error) {
       console.error('APIリクエストエラー:', error);
+      alert(`エラーが発生しました: ${error.message}\n\n再度お試しください。`);
     } finally {
       setIsLoading(false);
     }
