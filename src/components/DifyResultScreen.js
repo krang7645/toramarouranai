@@ -59,7 +59,18 @@ const DifyResultScreen = () => {
       console.log('Difyレスポンステキスト:', text);
 
       try {
-        const parsedData = JSON.parse(text);
+        // マークダウンのコードブロックからJSONを抽出
+        const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+        const jsonText = jsonMatch ? jsonMatch[1].trim() : text;
+
+        // 不要な文字を削除
+        const cleanedJson = jsonText
+          .replace(/[\u200B-\u200D\uFEFF]/g, '') // 不可視文字を削除
+          .replace(/\n\s*\n/g, '\n')             // 空行を削除
+          .replace(/^\s+|\s+$/gm, '');           // 行頭と行末の空白を削除
+
+        console.log('クリーニング後のJSON:', cleanedJson);
+        const parsedData = JSON.parse(cleanedJson);
         console.log('パースされたJSONデータ:', parsedData);
 
         if (parsedData && typeof parsedData === 'object') {
@@ -70,6 +81,7 @@ const DifyResultScreen = () => {
         }
       } catch (error) {
         console.error('JSONパースエラー:', error);
+        console.error('パース失敗したテキスト:', text);
         setFormattedData(defaultData);
       }
     }
