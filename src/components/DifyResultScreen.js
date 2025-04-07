@@ -122,22 +122,25 @@ const DifyResultScreen = () => {
     setIsLoading(true);
     try {
       console.log('リクエストデータ:', { mbtiType, zodiacSign, birthday });
+      const requestBody = {
+        workflow_id: process.env.REACT_APP_DIFY_WORKFLOW_ID,
+        user: 'default',
+        inputs: {
+          mbti: mbtiType,
+          zodiac: zodiacSign,
+          birthday: birthday,
+          gender: 'not_specified'
+        }
+      };
+      console.log('送信するリクエストボディ:', JSON.stringify(requestBody, null, 2));
+
       const response = await fetch('https://api.dify.ai/v1/workflows/run', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${process.env.REACT_APP_DIFY_API_KEY}`
         },
-        body: JSON.stringify({
-          workflow_id: process.env.REACT_APP_DIFY_WORKFLOW_ID,
-          user: 'default',
-          inputs: {
-            mbti: mbtiType,
-            zodiac: zodiacSign,
-            birthday: birthday,
-            gender: 'not_specified'
-          }
-        })
+        body: JSON.stringify(requestBody)
       });
 
       if (!response.ok) {
