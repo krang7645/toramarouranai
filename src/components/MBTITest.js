@@ -31,52 +31,52 @@ const MBTITest = () => {
   // MBTI診断の質問
   const questions = [
     {
-      text: "休日は家でゆっくり過ごすよりも、外出して友人と過ごす方が好きだ",
+      text: "休みの日は家でゴロゴロするより、外で友達と遊ぶ方が好きやねん",
       dimension: "EI",
       direction: "E"
     },
     {
-      text: "具体的な事実よりも、アイデアや可能性について考えるのが好きだ",
+      text: "目の前のことより、アイデアとか可能性について考えるんが好きやねん",
       dimension: "SN",
       direction: "N"
     },
     {
-      text: "決断する際は、論理的に考えるよりも、人の気持ちを優先する",
+      text: "決める時は、理屈より人の気持ちを大事にしてまうわ",
       dimension: "TF",
       direction: "F"
     },
     {
-      text: "計画を立てて行動するよりも、その場の流れに身を任せる方が好きだ",
+      text: "計画立てるより、なりゆきに任せる方が気楽やわ",
       dimension: "JP",
       direction: "P"
     },
     {
-      text: "初対面の人との会話は苦手だ",
+      text: "初めて会う人と話すんは苦手やわ～",
       dimension: "EI",
       direction: "I"
     },
     {
-      text: "詳細よりも全体像を重視する傾向がある",
+      text: "細かいことより、全体の雰囲気を大事にしてまうねん",
       dimension: "SN",
       direction: "N"
     },
     {
-      text: "グループでの意思決定では、公平性よりも全員の調和を重視する",
+      text: "みんなで決める時は、公平さより和を保つ方を重視してまうわ",
       dimension: "TF",
       direction: "F"
     },
     {
-      text: "予定変更があると落ち着かない",
+      text: "予定が変わったらソワソワしてまうねん",
       dimension: "JP",
       direction: "J"
     },
     {
-      text: "新しい環境ではすぐに馴染むほうだ",
+      text: "新しい環境でもすぐに馴染めるタイプやで",
       dimension: "EI",
       direction: "E"
     },
     {
-      text: "問題解決には、従来の方法よりも新しいアプローチを試したい",
+      text: "問題解決には、いつもの方法より新しいやり方を試してみたいねん",
       dimension: "SN",
       direction: "N"
     }
