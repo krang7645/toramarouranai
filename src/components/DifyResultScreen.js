@@ -49,85 +49,90 @@ const DifyResultScreen = () => {
       return;
     }
 
-    if (!difyResponse) {
-      generateDescription();
-    } else if (difyResponse.data && difyResponse.data.outputs && difyResponse.data.outputs.text) {
-      const text = difyResponse.data.outputs.text;
-      console.log('Difyレスポンステキスト:', text);
+    const loadData = async () => {
+      if (!difyResponse) {
+        setIsLoading(true);
+        await generateDescription();
+      } else if (difyResponse.data && difyResponse.data.outputs && difyResponse.data.outputs.text) {
+        const text = difyResponse.data.outputs.text;
+        console.log('Difyレスポンステキスト:', text);
 
-      try {
-        // テキストを直接JSONとしてパース
-        const parsedData = JSON.parse(text);
-        console.log('パースされたJSONデータ:', parsedData);
+        try {
+          // テキストを直接JSONとしてパース
+          const parsedData = JSON.parse(text);
+          console.log('パースされたJSONデータ:', parsedData);
 
-        if (parsedData && typeof parsedData === 'object') {
-          const formattedResult = {
-            恋愛: { 特性: '', 天命: '', アドバイス: '' },
-            仕事: { 特性: '', 天命: '', アドバイス: '' },
-            健康: { 特性: '', 天命: '', アドバイス: '' },
-            お金: { 特性: '', 天命: '', アドバイス: '' },
-            相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
-          };
+          if (parsedData && typeof parsedData === 'object') {
+            const formattedResult = {
+              恋愛: { 特性: '', 天命: '', アドバイス: '' },
+              仕事: { 特性: '', 天命: '', アドバイス: '' },
+              健康: { 特性: '', 天命: '', アドバイス: '' },
+              お金: { 特性: '', 天命: '', アドバイス: '' },
+              相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
+            };
 
-          // 各カテゴリのデータを設定
-          ['恋愛', '仕事', '健康', 'お金'].forEach(category => {
-            if (parsedData[category]) {
-              formattedResult[category] = {
-                特性: parsedData[category].特性 || '',
-                天命: parsedData[category].天命 || '',
-                アドバイス: parsedData[category].アドバイス || ''
+            // 各カテゴリのデータを設定
+            ['恋愛', '仕事', '健康', 'お金'].forEach(category => {
+              if (parsedData[category]) {
+                formattedResult[category] = {
+                  特性: parsedData[category].特性 || '',
+                  天命: parsedData[category].天命 || '',
+                  アドバイス: parsedData[category].アドバイス || ''
+                };
+              }
+            });
+
+            // 相性のいい人のデータを設定
+            if (parsedData['相性のいい人']) {
+              formattedResult['相性のいい人'] = {
+                友達: parsedData['相性のいい人'].友達 || '',
+                恋人: parsedData['相性のいい人'].恋人 || '',
+                仕事: parsedData['相性のいい人'].仕事 || ''
               };
             }
-          });
 
-          // 相性のいい人のデータを設定
-          if (parsedData['相性のいい人']) {
-            formattedResult['相性のいい人'] = {
-              友達: parsedData['相性のいい人'].友達 || '',
-              恋人: parsedData['相性のいい人'].恋人 || '',
-              仕事: parsedData['相性のいい人'].仕事 || ''
-            };
+            console.log('整形後のデータ:', formattedResult);
+            setFormattedData(formattedResult);
+            return;
           }
+        } catch (error) {
+          console.error('JSONパースエラー:', error);
+          console.error('パース失敗したJSON文字列:', text);
 
-          console.log('整形後のデータ:', formattedResult);
-          setFormattedData(formattedResult);
-          return;
-        }
-      } catch (error) {
-        console.error('JSONパースエラー:', error);
-        console.error('パース失敗したJSON文字列:', text);
+          // JSONブロックを探して再試行
+          const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+          if (jsonMatch && jsonMatch[1]) {
+            try {
+              const jsonContent = jsonMatch[1].trim()
+                .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                .replace(/\n\s*\n/g, '\n')
+                .replace(/^\s+|\s+$/gm, '');
 
-        // JSONブロックを探して再試行
-        const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
-        if (jsonMatch && jsonMatch[1]) {
-          try {
-            const jsonContent = jsonMatch[1].trim()
-              .replace(/[\u200B-\u200D\uFEFF]/g, '')
-              .replace(/\n\s*\n/g, '\n')
-              .replace(/^\s+|\s+$/gm, '');
-
-            const parsedData = JSON.parse(jsonContent);
-            if (parsedData && typeof parsedData === 'object') {
-              setFormattedData(parsedData);
-              return;
+              const parsedData = JSON.parse(jsonContent);
+              if (parsedData && typeof parsedData === 'object') {
+                setFormattedData(parsedData);
+                return;
+              }
+            } catch (innerError) {
+              console.error('JSONブロックのパースにも失敗:', innerError);
             }
-          } catch (innerError) {
-            console.error('JSONブロックのパースにも失敗:', innerError);
           }
         }
+
+        // パースに失敗した場合のデフォルト値
+        const defaultData = {
+          恋愛: { 特性: '', 天命: '', アドバイス: '' },
+          仕事: { 特性: '', 天命: '', アドバイス: '' },
+          健康: { 特性: '', 天命: '', アドバイス: '' },
+          お金: { 特性: '', 天命: '', アドバイス: '' },
+          相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
+        };
+
+        setFormattedData(defaultData);
       }
+    };
 
-      // パースに失敗した場合のデフォルト値
-      const defaultData = {
-        恋愛: { 特性: '', 天命: '', アドバイス: '' },
-        仕事: { 特性: '', 天命: '', アドバイス: '' },
-        健康: { 特性: '', 天命: '', アドバイス: '' },
-        お金: { 特性: '', 天命: '', アドバイス: '' },
-        相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
-      };
-
-      setFormattedData(defaultData);
-    }
+    loadData();
   }, [difyResponse]);
 
   const handleBack = () => {
