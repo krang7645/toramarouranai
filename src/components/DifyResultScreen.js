@@ -172,49 +172,57 @@ const DifyResultScreen = () => {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-      <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: '#fafafa' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 4, borderBottom: '2px solid #e0e0e0', pb: 2 }}>
           <Box
             component="img"
             src="/toramaro_worried.png"
             alt="トラまろ"
             sx={{
-              width: 40,
-              height: 40,
+              width: 60,
+              height: 60,
               mr: 2
             }}
           />
-          <Typography variant="h5">
+          <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
             {mbtiType}型 × {zodiacSign}の人の取説
           </Typography>
         </Box>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           {/* 恋愛 */}
           <Grid item xs={12}>
-            <Paper elevation={2} sx={{ p: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <FavoriteIcon color="error" sx={{ mr: 1 }} />
-                <Typography variant="h6">恋愛</Typography>
+            <Paper
+              elevation={3}
+              sx={{
+                p: 3,
+                borderRadius: 2,
+                border: '1px solid #ffcdd2',
+                backgroundColor: '#fff5f5'
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, borderBottom: '2px solid #ffcdd2', pb: 2 }}>
+                <FavoriteIcon sx={{ fontSize: 32, color: '#e53935', mr: 2 }} />
+                <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#d32f2f' }}>恋愛</Typography>
               </Box>
-              <Box sx={{ pl: 2 }}>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ pl: 3 }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・特性
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.恋愛?.['あなたの特性'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.恋愛?.['あなたの特性'] || '情報がありません'}</Typography>
                 </Box>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・天命
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.恋愛?.['あなたの天命'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.恋愛?.['あなたの天命'] || '情報がありません'}</Typography>
                 </Box>
                 <Box>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・アドバイス
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.恋愛?.アドバイス || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.恋愛?.アドバイス || '情報がありません'}</Typography>
                 </Box>
               </Box>
             </Paper>
@@ -222,29 +230,37 @@ const DifyResultScreen = () => {
 
           {/* 仕事 */}
           <Grid item xs={12}>
-            <Paper elevation={2} sx={{ p: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <WorkIcon color="primary" sx={{ mr: 1 }} />
-                <Typography variant="h6">仕事</Typography>
+            <Paper
+              elevation={3}
+              sx={{
+                p: 3,
+                borderRadius: 2,
+                border: '1px solid #bbdefb',
+                backgroundColor: '#f3f8ff'
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, borderBottom: '2px solid #bbdefb', pb: 2 }}>
+                <WorkIcon sx={{ fontSize: 32, color: '#1976d2', mr: 2 }} />
+                <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1976d2' }}>仕事</Typography>
               </Box>
-              <Box sx={{ pl: 2 }}>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ pl: 3 }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・特性
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.仕事?.['あなたの特性'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.仕事?.['あなたの特性'] || '情報がありません'}</Typography>
                 </Box>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・天命
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.仕事?.['あなたの天命'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.仕事?.['あなたの天命'] || '情報がありません'}</Typography>
                 </Box>
                 <Box>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・アドバイス
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.仕事?.アドバイス || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.仕事?.アドバイス || '情報がありません'}</Typography>
                 </Box>
               </Box>
             </Paper>
@@ -252,29 +268,37 @@ const DifyResultScreen = () => {
 
           {/* 健康 */}
           <Grid item xs={12}>
-            <Paper elevation={2} sx={{ p: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <HealthAndSafetyIcon color="success" sx={{ mr: 1 }} />
-                <Typography variant="h6">健康</Typography>
+            <Paper
+              elevation={3}
+              sx={{
+                p: 3,
+                borderRadius: 2,
+                border: '1px solid #c8e6c9',
+                backgroundColor: '#f5fff5'
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, borderBottom: '2px solid #c8e6c9', pb: 2 }}>
+                <HealthAndSafetyIcon sx={{ fontSize: 32, color: '#43a047', mr: 2 }} />
+                <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#43a047' }}>健康</Typography>
               </Box>
-              <Box sx={{ pl: 2 }}>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ pl: 3 }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・特性
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.健康?.['あなたの特性'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.健康?.['あなたの特性'] || '情報がありません'}</Typography>
                 </Box>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・天命
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.健康?.['あなたの天命'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.健康?.['あなたの天命'] || '情報がありません'}</Typography>
                 </Box>
                 <Box>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・アドバイス
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.健康?.アドバイス || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.健康?.アドバイス || '情報がありません'}</Typography>
                 </Box>
               </Box>
             </Paper>
@@ -282,40 +306,54 @@ const DifyResultScreen = () => {
 
           {/* お金 */}
           <Grid item xs={12}>
-            <Paper elevation={2} sx={{ p: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <PaidIcon color="warning" sx={{ mr: 1 }} />
-                <Typography variant="h6">お金</Typography>
+            <Paper
+              elevation={3}
+              sx={{
+                p: 3,
+                borderRadius: 2,
+                border: '1px solid #ffe0b2',
+                backgroundColor: '#fffaf0'
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, borderBottom: '2px solid #ffe0b2', pb: 2 }}>
+                <PaidIcon sx={{ fontSize: 32, color: '#f57c00', mr: 2 }} />
+                <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#f57c00' }}>お金</Typography>
               </Box>
-              <Box sx={{ pl: 2 }}>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ pl: 3 }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・特性
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.お金?.['あなたの特性'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.お金?.['あなたの特性'] || '情報がありません'}</Typography>
                 </Box>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・天命
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.お金?.['あなたの天命'] || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.お金?.['あなたの天命'] || '情報がありません'}</Typography>
                 </Box>
                 <Box>
-                  <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     ・アドバイス
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.お金?.アドバイス || '情報がありません'}</Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.お金?.アドバイス || '情報がありません'}</Typography>
                 </Box>
               </Box>
             </Paper>
           </Grid>
         </Grid>
 
-        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="contained"
             onClick={handleBack}
             startIcon={<ArrowBackIcon />}
+            sx={{
+              fontSize: '1.1rem',
+              py: 1.5,
+              px: 4,
+              borderRadius: 2
+            }}
           >
             もう一度診断する
           </Button>
