@@ -4,11 +4,11 @@ import { Box, Button, Container, LinearProgress, Typography, Card, CardContent, 
 const QuestionScreen = ({ currentQuestion, totalQuestions, question, onAnswer }) => {
   // 回答オプション
   const answerOptions = [
-    { value: 2, label: '強くそう思う' },
-    { value: 1, label: 'やや思う' },
-    { value: 0, label: 'どちらでもない' },
-    { value: -1, label: 'あまり思わない' },
-    { value: -2, label: '全く思わない' }
+    { value: 2, label: 'めっちゃそうやわ！' },
+    { value: 1, label: 'まぁそうかもな' },
+    { value: 0, label: 'うーん、どっちやろ？' },
+    { value: -1, label: 'あんまりちゃうかも' },
+    { value: -2, label: 'ぜんぜんちゃうわ！' }
   ];
 
   return (
