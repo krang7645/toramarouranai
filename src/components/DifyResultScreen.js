@@ -17,6 +17,22 @@ const DifyResultScreen = () => {
   const { difyResponse, mbtiType, zodiacSign, birthday } = location.state || {};
   console.log('取得した値:', { difyResponse, mbtiType, zodiacSign, birthday });
 
+  // 星座に対応する画像のマッピング
+  const zodiacImages = {
+    'おひつじ座': '/zodiac_characters/おひつじ座.png',
+    'おうし座': '/zodiac_characters/おうし座.png',
+    'ふたご座': '/zodiac_characters/ふたご座.png',
+    'かに座': '/zodiac_characters/かに座.png',
+    'しし座': '/zodiac_characters/しし座.png',
+    'おとめ座': '/zodiac_characters/おとめ座.png',
+    'てんびん座': '/zodiac_characters/てんびん座.png',
+    'さそり座': '/zodiac_characters/さそり座.png',
+    'いて座': '/zodiac_characters/いて座.png',
+    'やぎ座': '/zodiac_characters/やぎ座.png',
+    'みずがめ座': '/zodiac_characters/みずがめ座.png',
+    'うお座': '/zodiac_characters/うお座.png'
+  };
+
   const [formattedData, setFormattedData] = useState({
     恋愛: { 特性: '', 天命: '', アドバイス: '' },
     仕事: { 特性: '', 天命: '', アドバイス: '' },
@@ -241,12 +257,13 @@ const DifyResultScreen = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 4, borderBottom: '2px solid #e0e0e0', pb: 2 }}>
           <Box
             component="img"
-            src="/toramaro_worried.png"
-            alt="トラまろ"
+            src={zodiacImages[zodiacSign] || '/toramaro_worried.png'}
+            alt={`${zodiacSign}のトラまろ`}
             sx={{
-              width: 60,
-              height: 60,
-              mr: 2
+              width: 80,
+              height: 80,
+              mr: 2,
+              objectFit: 'contain'
             }}
           />
           <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
