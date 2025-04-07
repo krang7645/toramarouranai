@@ -28,10 +28,10 @@ const ResultScreen = ({
     const normalizedScore2 = ((scores[dim2] + maxPossibleScore) / (maxPossibleScore * 2)) * 100;
 
     const total = normalizedScore1 + normalizedScore2;
-    const percentage = (normalizedScore1 / total) * 100;
+    const percentage = (normalizedScore2 / total) * 100;
 
     return {
-      dominant: percentage >= 50 ? dim1 : dim2,
+      dominant: percentage >= 50 ? dim2 : dim1,
       percentage: percentage >= 50 ? percentage : 100 - percentage
     };
   };
