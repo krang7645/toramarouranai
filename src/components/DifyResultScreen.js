@@ -202,13 +202,13 @@ const DifyResultScreen = () => {
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                     ・特性
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.恋愛?.あなたの特性 || '情報がありません'}</Typography>
+                  <Typography sx={{ pl: 2 }}>{formattedData?.恋愛?.['あなたの特性'] || '情報がありません'}</Typography>
                 </Box>
                 <Box sx={{ mb: 2 }}>
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                     ・天命
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.恋愛?.あなたの天命 || '情報がありません'}</Typography>
+                  <Typography sx={{ pl: 2 }}>{formattedData?.恋愛?.['あなたの天命'] || '情報がありません'}</Typography>
                 </Box>
                 <Box>
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
@@ -232,13 +232,13 @@ const DifyResultScreen = () => {
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                     ・特性
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.仕事?.あなたの特性 || '情報がありません'}</Typography>
+                  <Typography sx={{ pl: 2 }}>{formattedData?.仕事?.['あなたの特性'] || '情報がありません'}</Typography>
                 </Box>
                 <Box sx={{ mb: 2 }}>
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                     ・天命
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.仕事?.あなたの天命 || '情報がありません'}</Typography>
+                  <Typography sx={{ pl: 2 }}>{formattedData?.仕事?.['あなたの天命'] || '情報がありません'}</Typography>
                 </Box>
                 <Box>
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
@@ -262,13 +262,13 @@ const DifyResultScreen = () => {
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                     ・特性
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.健康?.あなたの特性 || '情報がありません'}</Typography>
+                  <Typography sx={{ pl: 2 }}>{formattedData?.健康?.['あなたの特性'] || '情報がありません'}</Typography>
                 </Box>
                 <Box sx={{ mb: 2 }}>
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                     ・天命
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.健康?.あなたの天命 || '情報がありません'}</Typography>
+                  <Typography sx={{ pl: 2 }}>{formattedData?.健康?.['あなたの天命'] || '情報がありません'}</Typography>
                 </Box>
                 <Box>
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
@@ -292,13 +292,13 @@ const DifyResultScreen = () => {
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                     ・特性
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.お金?.あなたの特性 || '情報がありません'}</Typography>
+                  <Typography sx={{ pl: 2 }}>{formattedData?.お金?.['あなたの特性'] || '情報がありません'}</Typography>
                 </Box>
                 <Box sx={{ mb: 2 }}>
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                     ・天命
                   </Typography>
-                  <Typography sx={{ pl: 2 }}>{formattedData?.お金?.あなたの天命 || '情報がありません'}</Typography>
+                  <Typography sx={{ pl: 2 }}>{formattedData?.お金?.['あなたの天命'] || '情報がありません'}</Typography>
                 </Box>
                 <Box>
                   <Typography variant="subtitle1" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
