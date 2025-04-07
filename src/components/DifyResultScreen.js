@@ -38,39 +38,59 @@ const DifyResultScreen = () => {
       const text = difyResponse.data.outputs.text;
       console.log('Difyレスポンステキスト:', text);
 
-      // JSONブロックを探す
-      const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
-      if (jsonMatch && jsonMatch[1]) {
-        let jsonContent = '';
-        try {
-          // JSONテキストの前処理
-          jsonContent = jsonMatch[1].trim()
-            .replace(/[\u200B-\u200D\uFEFF]/g, '') // 不可視文字を削除
-            .replace(/\n\s*\n/g, '\n') // 空行を削除
-            .replace(/^\s+|\s+$/gm, ''); // 各行の先頭と末尾の空白を削除
+      try {
+        // テキストを直接JSONとしてパース
+        const parsedData = JSON.parse(text);
+        console.log('パースされたJSONデータ:', parsedData);
 
-          console.log('クリーニング後のJSON文字列:', jsonContent);
-          const parsedData = JSON.parse(jsonContent);
-          console.log('パースされたJSONデータ:', parsedData);
+        if (parsedData && typeof parsedData === 'object') {
+          const formattedResult = {
+            恋愛: { 特性: '', 天命: '', アドバイス: '' },
+            仕事: { 特性: '', 天命: '', アドバイス: '' },
+            健康: { 特性: '', 天命: '', アドバイス: '' },
+            お金: { 特性: '', 天命: '', アドバイス: '' }
+          };
 
-          // 新しいJSON形式に対応
-          if (parsedData.恋愛 && typeof parsedData.恋愛 === 'object') {
-            setFormattedData(parsedData);
-            return;
-          }
-        } catch (error) {
-          console.error('JSONパースエラー:', error);
-          console.error('パース失敗したJSON文字列:', jsonContent);
-          console.error('エラーの詳細:', {
-            message: error.message,
-            stack: error.stack,
-            jsonLength: jsonContent.length,
-            firstChars: jsonContent.substring(0, 100)
+          // 各カテゴリのデータを設定
+          ['恋愛', '仕事', '健康', 'お金'].forEach(category => {
+            if (parsedData[category]) {
+              formattedResult[category] = {
+                特性: parsedData[category].特性 || '',
+                天命: parsedData[category].天命 || '',
+                アドバイス: parsedData[category].アドバイス || ''
+              };
+            }
           });
+
+          console.log('整形後のデータ:', formattedResult);
+          setFormattedData(formattedResult);
+          return;
+        }
+      } catch (error) {
+        console.error('JSONパースエラー:', error);
+        console.error('パース失敗したJSON文字列:', text);
+
+        // JSONブロックを探して再試行
+        const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+        if (jsonMatch && jsonMatch[1]) {
+          try {
+            const jsonContent = jsonMatch[1].trim()
+              .replace(/[\u200B-\u200D\uFEFF]/g, '')
+              .replace(/\n\s*\n/g, '\n')
+              .replace(/^\s+|\s+$/gm, '');
+
+            const parsedData = JSON.parse(jsonContent);
+            if (parsedData && typeof parsedData === 'object') {
+              setFormattedData(parsedData);
+              return;
+            }
+          } catch (innerError) {
+            console.error('JSONブロックのパースにも失敗:', innerError);
+          }
         }
       }
 
-      // JSONパースに失敗した場合は、テキストから抽出を試みる
+      // パースに失敗した場合のデフォルト値
       const defaultData = {
         恋愛: { 特性: '', 天命: '', アドバイス: '' },
         仕事: { 特性: '', 天命: '', アドバイス: '' },
