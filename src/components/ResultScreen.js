@@ -81,37 +81,55 @@ const ResultScreen = ({
                 3: { left: 'J（判断型）', right: 'P（知覚型）' },
               };
 
-              const isLeft = dim.dominant === labels[index].left[0];
-              const percentage = dim.percentage;
+              const leftScore = index === 0 ? scores.E :
+                              index === 1 ? scores.S :
+                              index === 2 ? scores.T :
+                              scores.J;
+
+              const rightScore = index === 0 ? scores.I :
+                               index === 1 ? scores.N :
+                               index === 2 ? scores.F :
+                               scores.P;
 
               return (
                 <Grid item xs={12} key={index}>
                   <Card variant="outlined">
                     <CardContent>
-                      <Grid container alignItems="center">
-                        <Grid item xs={3}>
-                          <Typography variant="body2" color={percentage >= 50 ? 'primary' : 'text.secondary'}>
+                      <Grid container alignItems="center" justifyContent="space-between">
+                        <Grid item xs={5} sx={{ textAlign: 'center' }}>
+                          <Typography variant="body2" color="text.primary">
                             {labels[index].left}
+                            <Box component="span" sx={{ display: 'block', fontWeight: 'bold', mt: 1 }}>
+                              {leftScore}点
+                            </Box>
                           </Typography>
                         </Grid>
-                        <Grid item xs={6}>
-                          <Box sx={{ position: 'relative', height: 10, bgcolor: 'grey.200', borderRadius: 5 }}>
-                            <Box
-                              sx={{
-                                position: 'absolute',
-                                left: 0,
-                                top: 0,
-                                height: '100%',
-                                width: `${percentage}%`,
-                                bgcolor: percentage >= 50 ? 'primary.main' : 'secondary.main',
-                                borderRadius: 5
-                              }}
-                            />
+                        <Grid item xs={2} sx={{ textAlign: 'center' }}>
+                          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                            <Box sx={{
+                              width: 20,
+                              height: 20,
+                              borderRadius: '50%',
+                              bgcolor: dim.percentage >= 50 ? 'primary.main' : 'transparent',
+                              border: '2px solid',
+                              borderColor: 'primary.main'
+                            }} />
+                            <Box sx={{
+                              width: 20,
+                              height: 20,
+                              borderRadius: '50%',
+                              bgcolor: dim.percentage < 50 ? 'secondary.main' : 'transparent',
+                              border: '2px solid',
+                              borderColor: 'secondary.main'
+                            }} />
                           </Box>
                         </Grid>
-                        <Grid item xs={3} sx={{ textAlign: 'right' }}>
-                          <Typography variant="body2" color={percentage < 50 ? 'secondary' : 'text.secondary'}>
+                        <Grid item xs={5} sx={{ textAlign: 'center' }}>
+                          <Typography variant="body2" color="text.primary">
                             {labels[index].right}
+                            <Box component="span" sx={{ display: 'block', fontWeight: 'bold', mt: 1 }}>
+                              {rightScore}点
+                            </Box>
                           </Typography>
                         </Grid>
                       </Grid>
