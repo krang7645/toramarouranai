@@ -14,8 +14,17 @@ const DifyResultScreen = () => {
   console.log('location全体:', location);
   console.log('location.state:', location.state);
 
-  const { difyResponse, mbtiType, zodiacSign, birthday } = location.state || {};
-  console.log('取得した値:', { difyResponse, mbtiType, zodiacSign, birthday });
+  const { difyResponse: initialDifyResponse, mbtiType, zodiacSign, birthday } = location.state || {};
+  console.log('取得した値:', { initialDifyResponse, mbtiType, zodiacSign, birthday });
+
+  // デフォルトのデータ構造
+  const defaultData = {
+    恋愛: { 特性: '', 天命: '', アドバイス: '' },
+    仕事: { 特性: '', 天命: '', アドバイス: '' },
+    健康: { 特性: '', 天命: '', アドバイス: '' },
+    お金: { 特性: '', 天命: '', アドバイス: '' },
+    相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
+  };
 
   // 星座に対応する画像のマッピング
   const zodiacImages = {
@@ -33,14 +42,9 @@ const DifyResultScreen = () => {
     'うお座': '/zodiac_characters/pisces.png'
   };
 
-  const [formattedData, setFormattedData] = useState({
-    恋愛: { 特性: '', 天命: '', アドバイス: '' },
-    仕事: { 特性: '', 天命: '', アドバイス: '' },
-    健康: { 特性: '', 天命: '', アドバイス: '' },
-    お金: { 特性: '', 天命: '', アドバイス: '' },
-    相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
-  });
+  const [formattedData, setFormattedData] = useState(defaultData);
   const [isLoading, setIsLoading] = useState(false);
+  const [difyResponse, setDifyResponse] = useState(initialDifyResponse);
 
   useEffect(() => {
     if (!mbtiType || !zodiacSign || !birthday) {
