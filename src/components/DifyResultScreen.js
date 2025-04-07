@@ -21,7 +21,8 @@ const DifyResultScreen = () => {
     恋愛: { 特性: '', 天命: '', アドバイス: '' },
     仕事: { 特性: '', 天命: '', アドバイス: '' },
     健康: { 特性: '', 天命: '', アドバイス: '' },
-    お金: { 特性: '', 天命: '', アドバイス: '' }
+    お金: { 特性: '', 天命: '', アドバイス: '' },
+    相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,7 +49,8 @@ const DifyResultScreen = () => {
             恋愛: { 特性: '', 天命: '', アドバイス: '' },
             仕事: { 特性: '', 天命: '', アドバイス: '' },
             健康: { 特性: '', 天命: '', アドバイス: '' },
-            お金: { 特性: '', 天命: '', アドバイス: '' }
+            お金: { 特性: '', 天命: '', アドバイス: '' },
+            相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
           };
 
           // 各カテゴリのデータを設定
@@ -61,6 +63,15 @@ const DifyResultScreen = () => {
               };
             }
           });
+
+          // 相性のいい人のデータを設定
+          if (parsedData['相性のいい人']) {
+            formattedResult['相性のいい人'] = {
+              友達: parsedData['相性のいい人'].友達 || '',
+              恋人: parsedData['相性のいい人'].恋人 || '',
+              仕事: parsedData['相性のいい人'].仕事 || ''
+            };
+          }
 
           console.log('整形後のデータ:', formattedResult);
           setFormattedData(formattedResult);
@@ -95,7 +106,8 @@ const DifyResultScreen = () => {
         恋愛: { 特性: '', 天命: '', アドバイス: '' },
         仕事: { 特性: '', 天命: '', アドバイス: '' },
         健康: { 特性: '', 天命: '', アドバイス: '' },
-        お金: { 特性: '', 天命: '', アドバイス: '' }
+        お金: { 特性: '', 天命: '', アドバイス: '' },
+        相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
       };
 
       setFormattedData(defaultData);
@@ -160,7 +172,8 @@ const DifyResultScreen = () => {
                 恋愛: { 特性: '', 天命: '', アドバイス: '' },
                 仕事: { 特性: '', 天命: '', アドバイス: '' },
                 健康: { 特性: '', 天命: '', アドバイス: '' },
-                お金: { 特性: '', 天命: '', アドバイス: '' }
+                お金: { 特性: '', 天命: '', アドバイス: '' },
+                相性のいい人: { 友達: '', 恋人: '', 仕事: '' }
               };
 
               // 各カテゴリのデータを設定
@@ -173,6 +186,15 @@ const DifyResultScreen = () => {
                   };
                 }
               });
+
+              // 相性のいい人のデータを設定
+              if (parsedData['相性のいい人']) {
+                formattedResult['相性のいい人'] = {
+                  友達: parsedData['相性のいい人'].友達 || '',
+                  恋人: parsedData['相性のいい人'].恋人 || '',
+                  仕事: parsedData['相性のいい人'].仕事 || ''
+                };
+              }
 
               console.log('整形後のデータ:', formattedResult);
               setFormattedData(formattedResult);
@@ -380,6 +402,44 @@ const DifyResultScreen = () => {
                     ・アドバイス
                   </Typography>
                   <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.お金?.アドバイス || '情報がありません'}</Typography>
+                </Box>
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* 相性のいい人 */}
+          <Grid item xs={12}>
+            <Paper
+              elevation={3}
+              sx={{
+                p: 3,
+                borderRadius: 2,
+                border: '1px solid #e1bee7',
+                backgroundColor: '#faf5ff'
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, borderBottom: '2px solid #e1bee7', pb: 2 }}>
+                <PetsIcon sx={{ fontSize: 32, color: '#8e24aa', mr: 2 }} />
+                <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#8e24aa' }}>相性のいい人</Typography>
+              </Box>
+              <Box sx={{ pl: 3 }}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    ・友達
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.相性のいい人?.友達 || '情報がありません'}</Typography>
+                </Box>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    ・恋人
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.相性のいい人?.恋人 || '情報がありません'}</Typography>
+                </Box>
+                <Box>
+                  <Typography variant="h6" color="primary" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    ・仕事
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 3, lineHeight: 1.8 }}>{formattedData?.相性のいい人?.仕事 || '情報がありません'}</Typography>
                 </Box>
               </Box>
             </Paper>
