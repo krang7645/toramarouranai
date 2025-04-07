@@ -16,7 +16,9 @@ const DifyResultScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (difyResponse && difyResponse.data && difyResponse.data.outputs && difyResponse.data.outputs.text) {
+    if (!difyResponse) {
+      generateDescription();
+    } else if (difyResponse.data && difyResponse.data.outputs && difyResponse.data.outputs.text) {
       const text = difyResponse.data.outputs.text;
       console.log('Difyレスポンステキスト:', text);
 
@@ -119,6 +121,7 @@ const DifyResultScreen = () => {
   const generateDescription = async () => {
     setIsLoading(true);
     try {
+      console.log('リクエストデータ:', { mbtiType, zodiacSign, birthday });
       const response = await fetch('https://api.dify.ai/v1/chat-messages', {
         method: 'POST',
         headers: {
@@ -133,7 +136,6 @@ const DifyResultScreen = () => {
           },
           query: `${mbtiType}型で${zodiacSign}の人の特徴を教えて`,
           response_mode: "blocking",
-          conversation_id: "",
           user: "default"
         })
       });
@@ -145,6 +147,8 @@ const DifyResultScreen = () => {
       }
 
       const data = await response.json();
+      console.log('APIレスポンスデータ:', data);
+
       if (data && data.answer) {
         setFormattedData({
           恋愛: data.answer,
