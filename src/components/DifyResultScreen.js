@@ -130,23 +130,41 @@ const DifyResultScreen = () => {
               .replace(/\n\s*\n/g, '\n') // 空行を削除
               .replace(/^\s+|\s+$/gm, ''); // 各行の先頭と末尾の空白を削除
 
+            console.log('クリーニング後のJSON文字列:', jsonContent);
             const parsedData = JSON.parse(jsonContent);
-            if (parsedData.恋愛 && typeof parsedData.恋愛 === 'object') {
-              setFormattedData(parsedData);
+            console.log('パースされたJSONデータ:', parsedData);
+
+            // データ構造を確認
+            if (parsedData && typeof parsedData === 'object') {
+              const formattedResult = {
+                恋愛: { 特性: '', 天命: '', アドバイス: '' },
+                仕事: { 特性: '', 天命: '', アドバイス: '' },
+                健康: { 特性: '', 天命: '', アドバイス: '' },
+                お金: { 特性: '', 天命: '', アドバイス: '' }
+              };
+
+              // 各カテゴリのデータを設定
+              ['恋愛', '仕事', '健康', 'お金'].forEach(category => {
+                if (parsedData[category]) {
+                  formattedResult[category] = {
+                    特性: parsedData[category].特性 || '',
+                    天命: parsedData[category].天命 || '',
+                    アドバイス: parsedData[category].アドバイス || ''
+                  };
+                }
+              });
+
+              console.log('整形後のデータ:', formattedResult);
+              setFormattedData(formattedResult);
               return;
             }
           }
+          throw new Error('Invalid JSON format');
         } catch (error) {
           console.error('JSON解析エラー:', error);
+          console.error('解析失敗したデータ:', data.answer);
+          alert(`エラーが発生しました: ${error.message}\n\n再度お試しください。`);
         }
-
-        // JSONパースに失敗した場合は、デフォルト値を設定
-        setFormattedData({
-          恋愛: { 特性: '', 天命: '', アドバイス: '' },
-          仕事: { 特性: '', 天命: '', アドバイス: '' },
-          健康: { 特性: '', 天命: '', アドバイス: '' },
-          お金: { 特性: '', 天命: '', アドバイス: '' }
-        });
       }
     } catch (error) {
       console.error('APIリクエストエラー:', error);
