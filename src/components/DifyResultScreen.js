@@ -122,20 +122,20 @@ const DifyResultScreen = () => {
     setIsLoading(true);
     try {
       console.log('リクエストデータ:', { mbtiType, zodiacSign, birthday });
-      const response = await fetch('https://api.dify.ai/v1/completion-messages', {
+      const response = await fetch('https://api.dify.ai/v1/chat-messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${process.env.REACT_APP_DIFY_API_KEY}`
         },
         body: JSON.stringify({
+          query: `${mbtiType}型で${zodiacSign}の人の特徴を教えて`,
+          user: "default",
           inputs: {
             mbti_type: mbtiType,
             zodiac_sign: zodiacSign,
-            birthday: birthday || '2000-01-01'
-          },
-          query: `${mbtiType}型で${zodiacSign}の人の特徴を教えて`,
-          user: "default"
+            birthday: birthday
+          }
         })
       });
 
@@ -148,9 +148,9 @@ const DifyResultScreen = () => {
       const data = await response.json();
       console.log('APIレスポンスデータ:', data);
 
-      if (data && data.text) {
+      if (data && data.answer) {
         setFormattedData({
-          恋愛: data.text,
+          恋愛: data.answer,
           仕事: '',
           健康: '',
           お金: ''
