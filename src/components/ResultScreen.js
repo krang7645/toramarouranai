@@ -11,6 +11,7 @@ import {
   Card,
   CardContent
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const ResultScreen = ({
   zodiacSign,
@@ -19,8 +20,11 @@ const ResultScreen = ({
   scores,
   loading,
   onSendToDify,
-  onReset
+  onReset,
+  birthday
 }) => {
+  const navigate = useNavigate();
+
   // MBTIのディメンションを計算
   const calculateDimension = (dim1, dim2) => {
     const maxPossibleScore = 9 * 3; // 各次元3問ずつ、最大スコアは3
@@ -42,6 +46,17 @@ const ResultScreen = ({
     calculateDimension('T', 'F'),
     calculateDimension('J', 'P')
   ];
+
+  const handleGetDescription = async () => {
+    navigate('/dify-result', {
+      state: {
+        difyResponse: null,
+        mbtiType: mbtiType,
+        zodiacSign: zodiacSign,
+        birthday: birthday
+      }
+    });
+  };
 
   return (
     <Container maxWidth="md">

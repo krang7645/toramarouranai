@@ -11,8 +11,9 @@ import PaidIcon from '@mui/icons-material/Paid';
 const DifyResultScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { difyResponse, mbtiType, zodiacSign } = location.state || {};
+  const { difyResponse, mbtiType, zodiacSign, birthday } = location.state || {};
   const [formattedData, setFormattedData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (difyResponse && difyResponse.data && difyResponse.data.outputs && difyResponse.data.outputs.text) {
@@ -113,6 +114,36 @@ const DifyResultScreen = () => {
 
   const handleBack = () => {
     navigate(-1);
+  };
+
+  const generateDescription = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('https://api.dify.ai/v1/chat-messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.REACT_APP_DIFY_API_KEY}`
+        },
+        body: JSON.stringify({
+          inputs: {
+            mbti_type: mbtiType,
+            zodiac_sign: zodiacSign,
+            birthday: birthday
+          },
+          query: `${mbtiType}型で${zodiacSign}の人の特徴を教えて`,
+          response_mode: "blocking",
+          conversation_id: "",
+          user: "default"
+        })
+      });
+
+      // ... existing code ...
+    } catch (error) {
+      console.error('APIリクエストエラー:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!difyResponse || !formattedData) {

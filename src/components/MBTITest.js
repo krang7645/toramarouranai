@@ -335,6 +335,7 @@ const MBTITest = () => {
             loading={loading}
             onSendToDify={sendToDify}
             onReset={resetTest}
+            birthday={birthdate}
           />
         );
 
