@@ -175,18 +175,21 @@ const MBTITest = () => {
         throw new Error('Dify APIの設定が見つかりません。環境変数を確認してください。');
       }
 
+      const formattedBirthday = `${birthdate.year}-${String(birthdate.month).padStart(2, '0')}-${String(birthdate.day).padStart(2, '0')}`;
+
       const requestBody = {
         inputs: {
           zodiac: zodiacSign,
           mbti: mbtiType,
-          gender: gender
+          gender: gender,
+          birthday: formattedBirthday
         },
         response_mode: "blocking",
         conversation_id: "",
         user: "user"
       };
 
-      console.log('Dify APIリクエスト送信中...');
+      console.log('Dify APIリクエスト送信中...', requestBody);
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -283,13 +286,14 @@ const MBTITest = () => {
   // 結果画面への遷移
   const goToResults = () => {
     if (difyResponse) {
+      const formattedBirthday = `${birthdate.year}-${String(birthdate.month).padStart(2, '0')}-${String(birthdate.day).padStart(2, '0')}`;
       navigate('/result', {
         state: {
           difyResponse,
           mbtiType,
           zodiacSign,
           gender,
-          birthday: `${birthdate.year}-${String(birthdate.month).padStart(2, '0')}-${String(birthdate.day).padStart(2, '0')}`
+          birthday: formattedBirthday
         }
       });
     }

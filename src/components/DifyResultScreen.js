@@ -139,8 +139,8 @@ const DifyResultScreen = () => {
         inputs: {
           mbti: mbtiType || '',
           zodiac: zodiacSign || '',
-          birthday: birthday || '',
-          gender: 'not_specified'
+          birthday: birthday || '2000-01-01',
+          gender: location.state?.gender || 'not_specified'
         }
       };
       console.log('送信するリクエストボディ:', JSON.stringify(requestBody, null, 2));
