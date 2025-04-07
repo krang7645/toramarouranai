@@ -140,7 +140,7 @@ const DifyResultScreen = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <Box
             component="img"
-            src="/@とら_眉ひそめ.png"
+            src="/toramaro_worried.png"
             alt="トラまろ"
             sx={{
               width: 40,
