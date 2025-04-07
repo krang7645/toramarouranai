@@ -122,15 +122,13 @@ const DifyResultScreen = () => {
     setIsLoading(true);
     try {
       console.log('リクエストデータ:', { mbtiType, zodiacSign, birthday });
-      const response = await fetch('https://api.dify.ai/v1/chat-messages', {
+      const response = await fetch('https://api.dify.ai/v1/workflows/run', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${process.env.REACT_APP_DIFY_API_KEY}`
         },
         body: JSON.stringify({
-          query: `${mbtiType}型で${zodiacSign}の人の特徴を教えて`,
-          user: "default",
           inputs: {
             mbti_type: mbtiType,
             zodiac_sign: zodiacSign,
