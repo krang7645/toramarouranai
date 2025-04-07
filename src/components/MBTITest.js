@@ -288,7 +288,8 @@ const MBTITest = () => {
           difyResponse,
           mbtiType,
           zodiacSign,
-          gender
+          gender,
+          birthday: `${birthdate.year}-${String(birthdate.month).padStart(2, '0')}-${String(birthdate.day).padStart(2, '0')}`
         }
       });
     }
