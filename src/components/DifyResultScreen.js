@@ -198,7 +198,7 @@ const DifyResultScreen = () => {
             onClick={handleBack}
             startIcon={<ArrowBackIcon />}
           >
-            戻る
+            もう一度占う
           </Button>
         </Box>
       </Paper>
