@@ -23,11 +23,13 @@ const ResultScreen = ({
 }) => {
   // MBTIのディメンションを計算
   const calculateDimension = (dim1, dim2) => {
-    const max = Math.max(scores[dim1], scores[dim2]);
-    const percentage = Math.round((max / (scores[dim1] + scores[dim2])) * 100);
+    const total = scores[dim1] + scores[dim2];
+    if (total === 0) return { dominant: dim1, percentage: 50 };
+
+    const percentage = Math.round((scores[dim1] / total) * 100);
     return {
-      dominant: scores[dim1] > scores[dim2] ? dim1 : dim2,
-      percentage: isNaN(percentage) ? 50 : percentage
+      dominant: scores[dim1] >= scores[dim2] ? dim1 : dim2,
+      percentage: percentage
     };
   };
 
@@ -79,8 +81,8 @@ const ResultScreen = ({
                 3: { left: 'J（判断型）', right: 'P（知覚型）' },
               };
 
-              const isLeft = dim.dominant === 'E' || dim.dominant === 'S' || dim.dominant === 'T' || dim.dominant === 'J';
-              const percentage = isLeft ? dim.percentage : 100 - dim.percentage;
+              const isLeft = dim.dominant === labels[index].left[0];
+              const percentage = dim.percentage;
 
               return (
                 <Grid item xs={12} key={index}>
@@ -88,7 +90,7 @@ const ResultScreen = ({
                     <CardContent>
                       <Grid container alignItems="center">
                         <Grid item xs={3}>
-                          <Typography variant="body2" color={isLeft ? 'primary' : 'text.secondary'}>
+                          <Typography variant="body2" color={percentage >= 50 ? 'primary' : 'text.secondary'}>
                             {labels[index].left}
                           </Typography>
                         </Grid>
@@ -101,14 +103,14 @@ const ResultScreen = ({
                                 top: 0,
                                 height: '100%',
                                 width: `${percentage}%`,
-                                bgcolor: isLeft ? 'primary.main' : 'secondary.main',
+                                bgcolor: percentage >= 50 ? 'primary.main' : 'secondary.main',
                                 borderRadius: 5
                               }}
                             />
                           </Box>
                         </Grid>
                         <Grid item xs={3} sx={{ textAlign: 'right' }}>
-                          <Typography variant="body2" color={!isLeft ? 'secondary' : 'text.secondary'}>
+                          <Typography variant="body2" color={percentage < 50 ? 'secondary' : 'text.secondary'}>
                             {labels[index].right}
                           </Typography>
                         </Grid>
