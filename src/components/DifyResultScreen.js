@@ -130,6 +130,7 @@ const DifyResultScreen = () => {
         },
         body: JSON.stringify({
           workflow_id: process.env.REACT_APP_DIFY_WORKFLOW_ID,
+          user: 'default',
           inputs: {
             mbti_type: mbtiType,
             zodiac_sign: zodiacSign,
