@@ -138,9 +138,16 @@ const DifyResultScreen = () => {
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-          <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
-            <PetsIcon />
-          </Avatar>
+          <Box
+            component="img"
+            src="/@とら_眉ひそめ.png"
+            alt="トラまろ"
+            sx={{
+              width: 40,
+              height: 40,
+              mr: 2
+            }}
+          />
           <Typography variant="h5">
             {mbtiType}型 × {zodiacSign}の人の取説
           </Typography>
