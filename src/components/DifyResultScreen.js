@@ -132,9 +132,10 @@ const DifyResultScreen = () => {
           workflow_id: process.env.REACT_APP_DIFY_WORKFLOW_ID,
           user: 'default',
           inputs: {
-            mbti_type: mbtiType,
-            zodiac_sign: zodiacSign,
-            birthday: birthday
+            mbti: mbtiType,
+            zodiac: zodiacSign,
+            birthday: birthday,
+            gender: 'not_specified'
           }
         })
       });
