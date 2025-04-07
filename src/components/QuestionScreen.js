@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -18,6 +18,8 @@ const QuestionScreen = ({
   question,
   onAnswer
 }) => {
+  const [selectedValue, setSelectedValue] = useState('');
+
   const answerOptions = [
     { value: 3, label: "めっちゃそうやわ" },
     { value: 2, label: "そうやな" },
@@ -29,6 +31,12 @@ const QuestionScreen = ({
   ];
 
   const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+
+  const handleChange = (event) => {
+    const value = parseInt(event.target.value);
+    setSelectedValue(value.toString());
+    onAnswer(value);
+  };
 
   return (
     <Container maxWidth="sm">
@@ -47,14 +55,15 @@ const QuestionScreen = ({
 
           <RadioGroup
             aria-label="question"
-            name="question"
-            onChange={(e) => onAnswer(parseInt(e.target.value))}
+            name={`question-${currentQuestion}`}
+            value={selectedValue}
+            onChange={handleChange}
             sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
           >
             {answerOptions.map((option) => (
               <FormControlLabel
                 key={option.value}
-                value={option.value}
+                value={option.value.toString()}
                 control={<Radio />}
                 label={option.label}
                 sx={{
