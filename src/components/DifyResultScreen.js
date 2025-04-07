@@ -19,18 +19,18 @@ const DifyResultScreen = () => {
 
   // 星座に対応する画像のマッピング
   const zodiacImages = {
-    'おひつじ座': '/zodiac_characters/おひつじ座.png',
-    'おうし座': '/zodiac_characters/おうし座.png',
-    'ふたご座': '/zodiac_characters/ふたご座.png',
-    'かに座': '/zodiac_characters/かに座.png',
-    'しし座': '/zodiac_characters/しし座.png',
-    'おとめ座': '/zodiac_characters/おとめ座.png',
-    'てんびん座': '/zodiac_characters/てんびん座.png',
-    'さそり座': '/zodiac_characters/さそり座.png',
-    'いて座': '/zodiac_characters/いて座.png',
-    'やぎ座': '/zodiac_characters/やぎ座.png',
-    'みずがめ座': '/zodiac_characters/みずがめ座.png',
-    'うお座': '/zodiac_characters/うお座.png'
+    'おひつじ座': '/zodiac_characters/aries.png',
+    'おうし座': '/zodiac_characters/taurus.png',
+    'ふたご座': '/zodiac_characters/gemini.png',
+    'かに座': '/zodiac_characters/cancer.png',
+    'しし座': '/zodiac_characters/leo.png',
+    'おとめ座': '/zodiac_characters/virgo.png',
+    'てんびん座': '/zodiac_characters/libra.png',
+    'さそり座': '/zodiac_characters/scorpio.png',
+    'いて座': '/zodiac_characters/sagittarius.png',
+    'やぎ座': '/zodiac_characters/capricorn.png',
+    'みずがめ座': '/zodiac_characters/aquarius.png',
+    'うお座': '/zodiac_characters/pisces.png'
   };
 
   const [formattedData, setFormattedData] = useState({
