@@ -86,68 +86,6 @@ const ResultScreen = ({
           <Typography variant="body1" paragraph>
             {typeDescription}
           </Typography>
-
-          <Grid container spacing={2} sx={{ mt: 3 }}>
-            {dimensions.map((dim, index) => {
-              const labels = {
-                0: { left: 'E（外向型）', right: 'I（内向型）' },
-                1: { left: 'S（現実型）', right: 'N（直感型）' },
-                2: { left: 'T（思考型）', right: 'F（感情型）' },
-                3: { left: 'J（判断型）', right: 'P（知覚型）' },
-              };
-
-              const leftScore = index === 0 ? scores.E :
-                              index === 1 ? scores.S :
-                              index === 2 ? scores.T :
-                              scores.J;
-
-              const rightScore = index === 0 ? scores.I :
-                               index === 1 ? scores.N :
-                               index === 2 ? scores.F :
-                               scores.P;
-
-              return (
-                <Grid item xs={12} key={index}>
-                  <Card variant="outlined">
-                    <CardContent>
-                      <Grid container alignItems="center" spacing={2}>
-                        <Grid item xs={2} sx={{ textAlign: 'center' }}>
-                          <Typography variant="body2" color="text.primary">
-                            {labels[index].left}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={8}>
-                          <Box sx={{
-                            width: '100%',
-                            height: 8,
-                            bgcolor: 'grey.200',
-                            borderRadius: 4,
-                            position: 'relative'
-                          }}>
-                            <Box sx={{
-                              position: 'absolute',
-                              left: `${dim.percentage}%`,
-                              top: '-4px',
-                              width: 16,
-                              height: 16,
-                              borderRadius: '50%',
-                              bgcolor: 'primary.main',
-                              transform: 'translateX(-50%)'
-                            }} />
-                          </Box>
-                        </Grid>
-                        <Grid item xs={2} sx={{ textAlign: 'center' }}>
-                          <Typography variant="body2" color="text.primary">
-                            {labels[index].right}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              );
-            })}
-          </Grid>
         </Paper>
 
         <Box sx={{ mt: 4 }}>
