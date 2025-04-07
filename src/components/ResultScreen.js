@@ -55,9 +55,6 @@ const ResultScreen = ({
               display: 'block'
             }}
           />
-          <Typography variant="h4" component="h1" gutterBottom>
-            トラまろ　天命診断
-          </Typography>
         </Box>
 
         <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
@@ -171,7 +168,7 @@ const ResultScreen = ({
             onClick={onReset}
             disabled={loading}
           >
-            やり直す
+            もう一度診断する
           </Button>
         </Box>
       </Box>

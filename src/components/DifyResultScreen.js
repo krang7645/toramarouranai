@@ -142,7 +142,7 @@ const DifyResultScreen = () => {
             <PetsIcon />
           </Avatar>
           <Typography variant="h5">
-            {mbtiType}型 × {zodiacSign}の運勢
+            {mbtiType}型 × {zodiacSign}の人の取説
           </Typography>
         </Box>
 
