@@ -54,14 +54,21 @@ const DifyResultScreen = () => {
     }
 
     // レスポンスがある場合のみJSONをパース
-    if (difyResponse?.data?.outputs?.text) {
-      const text = difyResponse.data.outputs.text;
+    if (difyResponse?.data?.answer) {
+      const text = difyResponse.data.answer;
       console.log('Difyレスポンステキスト:', text);
 
       try {
         // マークダウンのコードブロックからJSONを抽出
         const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
-        const jsonText = jsonMatch ? jsonMatch[1].trim() : text;
+        if (!jsonMatch) {
+          console.error('JSONブロックが見つかりません:', text);
+          setFormattedData(defaultData);
+          return;
+        }
+
+        const jsonText = jsonMatch[1].trim();
+        console.log('抽出したJSON:', jsonText);
 
         // 不要な文字を削除
         const cleanedJson = jsonText
@@ -105,10 +112,39 @@ const DifyResultScreen = () => {
           query: `以下の条件で取説を作成してください：
 MBTI: ${mbtiType}
 星座: ${zodiacSign}
-生年月日: ${birthday}`,
-          response_mode: 'blocking',
-          conversation_id: '',
-          user: 'user'
+生年月日: ${birthday}
+
+以下のJSON形式で出力してください：
+{
+  "恋愛": {
+    "特性": "",
+    "天命": "",
+    "アドバイス": ""
+  },
+  "仕事": {
+    "特性": "",
+    "天命": "",
+    "アドバイス": ""
+  },
+  "健康": {
+    "特性": "",
+    "天命": "",
+    "アドバイス": ""
+  },
+  "お金": {
+    "特性": "",
+    "天命": "",
+    "アドバイス": ""
+  },
+  "相性のいい人": {
+    "友達": "",
+    "恋人": "",
+    "仕事": ""
+  }
+}`,
+          response_mode: "blocking",
+          conversation_id: "",
+          user: "user"
         })
       });
 
